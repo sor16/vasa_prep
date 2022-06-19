@@ -5,13 +5,9 @@ library(ggplot2)
 library(httr)
 source('account_info.R')
 source('utils.R')
-# Define UI for application that draws a histogram
 ui <- fluidPage(
-    
-    # Application title
-    titlePanel("Vasafeðgar"),
-    
-    # Sidebar with a slider input for number of bins 
+        # Application title
+        titlePanel("Vasafeðgar"),
         fluidRow(
             column(3,
                wellPanel(
@@ -33,7 +29,6 @@ ui <- fluidPage(
         )
     )
 
-# Define server logic required to draw a histogram
 server <- function(input, output) {
     observeEvent(input$authenticate,{
         stoken <- httr::config(token = strava_oauth(app_name, 
