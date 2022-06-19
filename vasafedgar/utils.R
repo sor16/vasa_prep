@@ -38,7 +38,10 @@ get_stoken_from_binary <- function(t){
     f = file('.httr-oauth',"wb")
     writeBin(object=as.raw(as.hexmode(t_bin_pairs)),con=f) 
     close(f)
-    httr::config(token = readRDS('.httr-oauth')[[1]])
+    stoken <- httr::config(token = readRDS('.httr-oauth')[[1]])
+    file.remove('.httr-oauth')
+    stoken
+    
 }
 
 update_activities <- function(users){

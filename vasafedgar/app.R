@@ -36,6 +36,7 @@ server <- function(input, output) {
                                                     app_scope="activity:read_all",
                                                     cache=T))
         stoken_binary = paste(readBin('.httr-oauth',what = "raw",n = 1e4),collapse='')
+        file.remove('.httr-oauth')
         dat <- c('name'=input$name,
                  'athlete_id'=input$athlete_id,
                  'auth'=stoken_binary)
@@ -50,10 +51,12 @@ server <- function(input, output) {
             if(nrow(activities)==0){
                 return(NULL)
             }
+            print(users$name)
             cols <- c('#BC3C29FF','#0072B5FF','#E18727FF','#20854EFF')
-            activities %>%
-            mutate(cum_time=cumsum(time)/(60*60),
-                   date=as.Date(date)) %>%
+            group_by(activities,athlete_id) %>%
+            mutate(cum_time=cumsum(time)/(60*60)) %>%
+            ungroup() %>%
+            mutate(date=as.Date(date)) %>%
             ggplot(aes(date,cum_time,fill=factor(athlete_id),col=factor(athlete_id))) +
             geom_line(size=2) +
             geom_point(size=4) +
