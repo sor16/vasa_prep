@@ -41,8 +41,7 @@ get_stoken_from_binary <- function(t){
     httr::config(token = readRDS('.httr-oauth')[[1]])
 }
 
-update_activities <- function(){
-    users <- load_data('User')
+update_activities <- function(users){
     stokens <- list()
     for(i in 1:nrow(users)){
         stokens[[i]] <- get_stoken_from_binary(users$auth[i])

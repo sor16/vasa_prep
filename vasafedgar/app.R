@@ -2,7 +2,6 @@ library(shiny)
 library(rStrava)
 library(dplyr)
 library(ggplot2)
-library(httr)
 source('account_info.R')
 source('utils.R')
 ui <- fluidPage(
@@ -44,13 +43,14 @@ server <- function(input, output) {
     })
     
     observeEvent(input$update,{
-        update_activities()
         output$active_minutes <- renderPlot({
-            cols <- c('#BC3C29FF','#0072B5FF','#E18727FF','#20854EFF')
+            users <- load_data('User')
+            update_activities(users)
             activities <- load_data('Activity')
             if(nrow(activities)==0){
                 return(NULL)
             }
+            cols <- c('#BC3C29FF','#0072B5FF','#E18727FF','#20854EFF')
             activities %>%
             mutate(cum_time=cumsum(time)/(60*60),
                    date=as.Date(date)) %>%
