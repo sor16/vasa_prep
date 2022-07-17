@@ -1,74 +1,54 @@
-library(RMySQL)
+library(RMariaDB)
 library(httr)
+library(dplyr)
+library(rStrava)
 
-save_data <- function(table,data) {
-    # Connect to the database
-    db <- dbConnect(MySQL(), dbname = database_name, host = options()$mysql$host, 
-                    port = options()$mysql$port, user = options()$mysql$user, 
-                    password = options()$mysql$password)
-    # Construct the update query by looping over the data fields
-    query <- sprintf(
-        "INSERT INTO %s (%s) VALUES ('%s') AS NEW ON DUPLICATE KEY UPDATE %s",
-        table,
-        paste(names(data), collapse = ", "),
-        paste(data, collapse = "', '"),
-        paste(paste0(names(data),' = NEW.',names(data)),collapse=', ')
-    )
-    # Submit the update query and disconnect
-    dbGetQuery(db, query)
-    dbDisconnect(db)
+save_data <- function(db,table,data) {
+    # Append to table input data
+    dbAppendTable(db,table,data,overwrite=T)
 }
 
-load_data <- function(table) {
+# update_field <- function(db,table,field,value,pk_field,pk_value){
+#     query <- paste0("UPDATE ",table," ",field,"=",value,"  WHERE ",pk_field,"=",pk_value)
+#     dbSendQuery(db, query)
+#     #dbDisconnect(db)
+# }
+
+load_data <- function(db,table) {
     # Connect to the database
-    db <- dbConnect(MySQL(), dbname = database_name, host = options()$mysql$host, 
-                    port = options()$mysql$port, user = options()$mysql$user, 
-                    password = options()$mysql$password)
     # Construct the fetching query
     query <- sprintf("SELECT * FROM %s", table)
     # Submit the fetch query and disconnect
     data <- dbGetQuery(db, query)
-    dbDisconnect(db)
     data
 }
 
-get_stoken_from_binary <- function(t){
-    t_bin_vec <- unlist(strsplit(t,split=''))
-    t_bin_pairs <- paste0(t_bin_vec[c(T,F)],t_bin_vec[c(F,T)])
-    f = file('.httr-oauth',"wb")
-    writeBin(object=as.raw(as.hexmode(t_bin_pairs)),con=f) 
-    close(f)
-    stoken <- httr::config(token = readRDS('.httr-oauth')[[1]])
-    file.remove('.httr-oauth')
-    stoken
-    
+
+update_activities <- function(db,users,curr_activities){
+    date_origin <- as.Date('2022-05-01')
+    all_strava_activities <- lapply(1:nrow(users),function(i){
+                                print(users$name[i])
+                                stoken <- httr::config(token = readRDS(paste0('auth/httr-oauth_',athletes_mapping[users$name[i]]))[[1]])
+                                activities_list <- get_activity_list(stoken,after=date_origin-1)
+                                activity_list_to_table(activities_list,users$athlete_id[i])
+                              }) %>% bind_rows()
+    curr_activities$date <- as.character(curr_activities$date)
+    new_activities <- anti_join(all_strava_activities,curr_activities,by=c('date','athlete_id'))
+    all_activities <- bind_rows(curr_activities,all_strava_activities) %>%
+                      distinct()
+    save_data(db,'Activity',new_activities)
+    return(all_activities)
 }
 
-update_activities <- function(users){
-    stokens <- list()
-    for(i in 1:nrow(users)){
-        stokens[[i]] <- get_stoken_from_binary(users$auth[i])
-        date_origin <- if(is.na(users$last_updated[i])) as.Date('2022-05-01') else as.Date(users$last_updated[i],format='%Y-%m-%d')
-        new_activities <- get_activity_list(stokens[[i]],after=date_origin-1)
-        save_data('User',data=c('name'=users$name[i],
-                                'athlete_id'=users$athlete_id[i],
-                                'auth'=users$auth[i],
-                                'photo'=users$photo[i],
-                                'last_updated'=gsub(' GMT','',.POSIXct(Sys.time(), tz="GMT"))))
-        save_activities(new_activities,users$athlete_id[i])
-    }
-}
-
-save_activities <- function(activity_list,athlete_id){
-    for(i in 1:length(activity_list)){
-        dat <- c('athlete_id'=athlete_id,
-                 'date'=gsub('T',' ',gsub('Z$','',activity_list[[i]]$start_date)),
-                 'name'=activity_list[[i]]$name,
-                 'type'=activity_list[[i]]$type,
-                 'time'=activity_list[[i]]$moving_time,
-                 'distance'=activity_list[[i]]$distance,
-                 'avg_heartrate'=if(activity_list[[i]]$has_heartrate) activity_list[[i]]$average_heartrate else 'NA',
-                 'description'='')
-        save_data('Activity',dat)
-    }
+activity_list_to_table <- function(activity_list,athlete_id){
+    lapply(1:length(activity_list), function(i){
+        tibble('date'=gsub('T',' ',gsub('Z$','',activity_list[[i]]$start_date)),
+                          'name'=activity_list[[i]]$name,
+                          'athlete_id'=athlete_id,
+                          'type'=activity_list[[i]]$type,
+                          'time'=activity_list[[i]]$moving_time,
+                          'distance'=activity_list[[i]]$distance,
+                          'avg_heartrate'=if(activity_list[[i]]$has_heartrate) activity_list[[i]]$average_heartrate else as.numeric(NA),
+                          'description'='')
+    }) %>% bind_rows()  
 }
