@@ -7,7 +7,7 @@ save_data <- function(db,table,data) {
     # Append to table input data
     dbAppendTable(db,table,data,overwrite=T)
 }
-
+# 
 # update_field <- function(db,table,field,value,pk_field,pk_value){
 #     query <- paste0("UPDATE ",table," ",field,"=",value,"  WHERE ",pk_field,"=",pk_value)
 #     dbSendQuery(db, query)
@@ -24,19 +24,35 @@ load_data <- function(db,table) {
 }
 
 
-update_activities <- function(db,users,curr_activities){
+update_activities <- function(db,users){
     date_origin <- as.Date('2022-05-01')
-    all_strava_activities <- lapply(1:nrow(users),function(i){
+    curr_activities <- load_data(db,'Activity')
+    new_activities <- lapply(1:nrow(users),function(i){
                                 print(users$name[i])
                                 stoken <- httr::config(token = readRDS(paste0('auth/httr-oauth_',athletes_mapping[users$name[i]]))[[1]])
-                                activities_list <- get_activity_list(stoken,after=date_origin-1)
+                                if(is.na(users$latest_activity[i])){
+                                    date_start <- date_origin
+                                }else{
+                                    date_start <- as.Date(users$latest_activity[i])
+                                }
+                                print(date_start)
+                                activities_list <- get_activity_list(stoken,after=date_start-1)
                                 activity_list_to_table(activities_list,users$athlete_id[i])
                               }) %>% bind_rows()
+    users_updated <- group_by(new_activities,athlete_id) %>%
+                     summarise(latest_activity=max(date)) %>%
+                     left_join(select(users,-latest_activity),.,by='athlete_id')
     curr_activities$date <- as.character(curr_activities$date)
-    new_activities <- anti_join(all_strava_activities,curr_activities,by=c('date','athlete_id'))
-    all_activities <- bind_rows(curr_activities,all_strava_activities) %>%
-                      distinct()
-    save_data(db,'Activity',new_activities)
+    new_activities <- anti_join(new_activities,curr_activities,by=c('date','athlete_id'))
+    if(nrow(new_activities)!=0){
+        dbAppendTable(db,'Activity',new_activities,overwrite=T)
+    }
+    if(!isTRUE(all_equal(users,users_updated))){
+        dbWriteTable(db,'User',users_updated,overwrite=T)
+    }
+    all_activities <- bind_rows(curr_activities,new_activities) %>%
+                      as_tibble() %>%
+                      arrange(athlete_id,date)
     return(all_activities)
 }
 

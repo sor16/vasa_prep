@@ -1,0 +1,215 @@
+---
+title: "Vasafeðgar"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: rows
+    vertical_layout: fill
+runtime: shiny
+---
+
+```{r global, include=FALSE}
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(lubridate)
+source('account_info.R')
+source('utils.R')
+```
+
+```{r}
+#for plots
+icelandic_months <- function(x) {
+    months <- c("janúar", "febrúar", "mars", "apríl", "maí", "júní", 
+                "júlí", "ágúst", "september", "október", "nóvember", "desember")
+    
+    #paste0(mday(x), ". ", months[month(x)])
+    months[month(x)]
+}
+
+icelandic_dates <- function(x) {
+    months <- c("jan", "feb", "mars", "apr", "maí", "jún", 
+                "júl", "ág", "sept", "okt", "nóv", "des")
+    
+    paste0(mday(x), ".", months[month(x)])
+}
+cols <- c('#BC3C29FF','#0072B5FF','#E18727FF','#20854EFF')
+```
+
+```{r}
+con <- dbConnect(MariaDB(), dbname = database_name, host = mysql$host,
+                  port = mysql$port, user = mysql$user,
+                  password = mysql$password,ssl.ca='cert.pem')
+users <- load_data(con,'User')
+#activities <- update_activities(con,users)
+activities <- load_data(con,'Activity')
+```
+
+```{r}
+start_date <- as.Date('2022-08-01')
+vasa_date <- as.Date('2023-03-05')
+weeks <- difftime(start_date,vasa_date,unit='weeks')
+target_dist <- 500 #km, minus what is done
+lag <- 14
+```
+
+
+Þolþjálfun {data-icon="fa-heart"}
+=======================================================================
+
+Sidebar {.sidebar}
+-----------------------------------------------------------------------
+
+
+```{r}
+radioButtons(inputId = 'athlete',label='Íþróttamaður',choices=c('Kári','Sölvi','Sæmundur','Rögnvaldur'),selected = 'Kári')
+sliderInput('NordicSki',label='Gönguskíði',min=0,max=1,value = 0.2)
+sliderInput('Run',label='Hlaup',,min=0,max=1,value = 0.2)
+sliderInput('Ride','Hjól',min=0,max=1,value = 0.4)
+sliderInput('Swim','Sund',min=0,max=1,value = 0.1)
+sliderInput('Walk','Ganga',min=0,max=1,value = 0.1)
+sliderInput('Golf','Golf',min=0,max=1,value = 0)
+actionButton('update',label='Update')
+```
+
+
+Row {data-height = 450}
+-----------------------------------------------------------------------
+
+```{r}
+process_dat <- eventReactive(input$update,{
+    activity_names <- c('NordicSki','Run','Ride','Swim','Walk','Golf')
+    activity_ice <- c('Gönguskíði','Hlaup','Hjól','Sund','Ganga','Golf')
+    weights <- tibble(activity=activity_names,
+                      activity_ice=activity_ice,
+                      weight=c(1,2,0.5,10,0.2,0.2),
+                      p=sapply(activity_names,function(a) input[[a]]))
+    weights$p <- weights$p/sum(weights$p)
+    curr_athlete_id <- users$athlete_id[users$name==input$athlete]
+    activities_athlete <- filter(activities,athlete_id==curr_athlete_id)
+    
+    eff_km_dat <- inner_join(activities_athlete,weights,by=c('type'='activity')) %>%
+                    filter(date>start_date) %>%
+                    mutate(effective_km=weight*distance/1000) %>%
+                    group_by(athlete_id) %>%
+                    mutate(cum_effective_km=cumsum(effective_km)) %>%
+                    ungroup()
+    
+    pred_dat <- filter(eff_km_dat,date>=(Sys.Date()-lag)) %>%
+                group_by(athlete_id) %>%
+                summarise(avg_km=sum(effective_km)/lag,current_effective_km=max(cum_effective_km)) %>%
+                mutate(pred_dist=current_effective_km + avg_km*as.numeric(vasa_date-Sys.Date())) %>%
+                pivot_longer(cols=c('current_effective_km','pred_dist')) %>%
+                mutate(date=if_else(name=='current_effective_km',Sys.Date(),vasa_date))
+    return(list('athlete_id'=curr_athlete_id,'weights'=weights,'eff_km_dat'=eff_km_dat,'pred_dat'=pred_dat))
+})
+```
+
+
+### Dreifing tegunda æfingar
+```{r}
+renderPlot({
+ggplot(process_dat()$weights,aes(activity_ice,p*100)) +
+geom_col(position='dodge',width=0.4,fill=cols[2]) +
+ylab('Hlutfall (%)') +
+scale_y_continuous(limits=c(0,100),expand=c(0,0)) +
+theme_classic() +
+theme(
+    plot.title=element_text(size=18,face="bold"),
+    axis.title.x=element_text(size=18),
+    axis.title.y=element_text(size=18),
+    axis.text.x=element_text(size=18),
+    axis.text.y=element_text(size=18)
+)
+})
+```
+
+### Áætlað vikuplan
+```{r}
+renderPlot({
+    mutate(process_dat()$weights,athlete_id=process_dat()$athlete_id) %>%
+    inner_join(filter(process_dat()$pred_dat,name=='current_effective_km'),by='athlete_id') %>%
+    mutate(km_left=target_dist-value,
+           weeks_left=difftime(vasa_date,date,unit='weeks'),
+           avg_left=(p*km_left/weight)/as.numeric(weeks_left)) %>%
+    ggplot(aes(activity_ice,avg_left)) +
+    geom_col(position='dodge',fill=cols[1],width=0.4) +
+    scale_y_continuous(expand=c(0,0)) +
+    ylab('Meðalfjöldi kílómetra á viku fram að Vasa') +
+    theme_classic() +
+    theme(
+        plot.title=element_text(size=18,face="bold"),
+        axis.title.x=element_text(size=18),
+        axis.title.y=element_text(size=18),
+        axis.text.x=element_text(size=18),
+        axis.text.y=element_text(size=18),
+        legend.title=element_text(size=18),
+        legend.text = element_text(size=18)
+    )
+})
+```
+
+
+Row {data-height = 550}
+-----------------------------------------------------------------------
+
+### Æfingaálag síðustu tveggja vikna
+```{r}
+renderPlot({
+    plot_dat <- tibble(date=seq(ymd(Sys.Date()-lag),ymd(Sys.Date()),by=1)) %>%
+                left_join(mutate(process_dat()$eff_km_dat,date=ymd(as.Date(date))),by='date') %>%
+                mutate(effective_km=ifelse(is.na(effective_km),0,effective_km)) %>%
+                group_by(date) %>%
+                summarise(has_activity=any(!is.na(athlete_id)),effective_km=sum(effective_km))
+    ggplot() +
+    geom_col(data=plot_dat,aes(date,effective_km),width=1,col='black',fill=cols[3]) +
+    #geom_point(data=filter(plot_dat,has_activity),aes(date,effective_km),size=4,col=cols[3]) +
+    scale_x_date(breaks = '1 day',
+                 labels = icelandic_dates,
+                 expand = expansion(add = 0)) +
+    scale_y_continuous(expand=c(0,0.03)) +
+    ylab('Uppsafnaðir kílómetrar') +
+    theme_classic()+
+    theme(
+        plot.title=element_text(size=18,face="bold"),
+        axis.title.x=element_text(size=18),
+        axis.title.y=element_text(size=18),
+        axis.text.x=element_text(size=18),
+        axis.text.y=element_text(size=18),
+        legend.title=element_text(size=18),
+        legend.text = element_text(size=18),
+        plot.margin=unit(c(0,1,0,0),'cm')
+    )
+})
+```
+
+### Uppsafnaðir kílómetrar
+```{r}
+renderPlot({
+    ggplot(process_dat()$eff_km_dat,aes(as.Date(date),cum_effective_km)) +
+    geom_step(size=2,col=cols[4]) +
+    geom_point(size=4,col=cols[4]) +
+    geom_line(data=process_dat()$pred_dat,aes(date,value),linetype='dashed',col=cols[4]) +
+    geom_abline(intercept = target_dist,slope=0) +
+    scale_x_date(breaks = '1 month',
+                 labels = icelandic_months,
+                 expand = expansion(add = 0)) +
+    scale_y_continuous(breaks=seq(0,1000,by=100)) +
+    xlab('Mánuður') +
+    ylab('Uppsafnaðir kílómetrar') +
+    theme_classic()+
+    theme(
+        plot.title=element_text(size=18,face="bold"),
+        axis.title.x=element_text(size=18),
+        axis.title.y=element_text(size=18),
+        axis.text.x=element_text(size=18),
+        axis.text.y=element_text(size=18),
+        legend.title=element_text(size=18),
+        legend.text = element_text(size=18),
+        plot.margin=unit(c(0,1,0,0),'cm')
+    )
+})
+```
+
+
+Styrktarþjálfun {data-icon="fa-dumbbell"}
+=======================================================================
