@@ -1,7 +1,17 @@
 library(RMariaDB)
 library(httr)
 library(dplyr)
+library(tidyr)
 library(rStrava)
+
+roll_avg <- function(x,k){
+    roll_avg_vec <- vector('numeric',length(x))
+    for(i in 1:length(x)){
+        lower_idx <- max(i-k+1,1)
+        roll_avg_vec[i] <- mean(x[lower_idx:i])
+    }
+    return(roll_avg_vec)
+}
 
 save_data <- function(db,table,data) {
     # Append to table input data
@@ -28,14 +38,12 @@ update_activities <- function(db,users){
     date_origin <- as.Date('2022-05-01')
     curr_activities <- load_data(db,'Activity')
     new_activities <- lapply(1:nrow(users),function(i){
-                                print(users$name[i])
                                 stoken <- httr::config(token = readRDS(paste0('auth/httr-oauth_',athletes_mapping[users$name[i]]))[[1]])
                                 if(is.na(users$latest_activity[i])){
                                     date_start <- date_origin
                                 }else{
                                     date_start <- as.Date(users$latest_activity[i])
                                 }
-                                print(date_start)
                                 activities_list <- get_activity_list(stoken,after=date_start-1)
                                 activity_list_to_table(activities_list,users$athlete_id[i])
                               }) %>% bind_rows()

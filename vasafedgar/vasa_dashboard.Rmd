@@ -8,8 +8,6 @@ runtime: shiny
 ---
 
 ```{r global, include=FALSE}
-library(dplyr)
-library(tidyr)
 library(ggplot2)
 library(lubridate)
 source('account_info.R')
@@ -40,14 +38,14 @@ con <- dbConnect(MariaDB(), dbname = database_name, host = mysql$host,
                   port = mysql$port, user = mysql$user,
                   password = mysql$password,ssl.ca='cert.pem')
 users <- load_data(con,'User')
-#activities <- update_activities(con,users)
-activities <- load_data(con,'Activity')
+activities <- update_activities(con,users)
+#activities <- load_data(con,'Activity')
 ```
 
 ```{r}
 start_date <- as.Date('2022-08-01')
 vasa_date <- as.Date('2023-03-05')
-weeks <- difftime(start_date,vasa_date,unit='weeks')
+weeks <- difftime(vasa_date,start_date,unit='weeks')
 target_dist <- 500 #km, minus what is done
 lag <- 14
 ```
@@ -81,7 +79,7 @@ process_dat <- eventReactive(input$update,{
     activity_ice <- c('Gönguskíði','Hlaup','Hjól','Sund','Ganga','Golf')
     weights <- tibble(activity=activity_names,
                       activity_ice=activity_ice,
-                      weight=c(1,2,0.5,10,0.2,0.2),
+                      weight=c(1,2,0.5,5,0.2,0.2),
                       p=sapply(activity_names,function(a) input[[a]]))
     weights$p <- weights$p/sum(weights$p)
     curr_athlete_id <- users$athlete_id[users$name==input$athlete]
@@ -110,6 +108,7 @@ process_dat <- eventReactive(input$update,{
 renderPlot({
 ggplot(process_dat()$weights,aes(activity_ice,p*100)) +
 geom_col(position='dodge',width=0.4,fill=cols[2]) +
+xlab('') +
 ylab('Hlutfall (%)') +
 scale_y_continuous(limits=c(0,100),expand=c(0,0)) +
 theme_classic() +
@@ -134,6 +133,7 @@ renderPlot({
     ggplot(aes(activity_ice,avg_left)) +
     geom_col(position='dodge',fill=cols[1],width=0.4) +
     scale_y_continuous(expand=c(0,0)) +
+    xlab('') +
     ylab('Meðalfjöldi kílómetra á viku fram að Vasa') +
     theme_classic() +
     theme(
@@ -155,19 +155,24 @@ Row {data-height = 550}
 ### Æfingaálag síðustu tveggja vikna
 ```{r}
 renderPlot({
-    plot_dat <- tibble(date=seq(ymd(Sys.Date()-lag),ymd(Sys.Date()),by=1)) %>%
+    plot_dat <- tibble(date=seq(ymd(min(as.Date(process_dat()$eff_km_dat$date))),ymd(Sys.Date()),by=1)) %>%
                 left_join(mutate(process_dat()$eff_km_dat,date=ymd(as.Date(date))),by='date') %>%
                 mutate(effective_km=ifelse(is.na(effective_km),0,effective_km)) %>%
                 group_by(date) %>%
-                summarise(has_activity=any(!is.na(athlete_id)),effective_km=sum(effective_km))
+                summarise(has_activity=any(!is.na(athlete_id)),effective_km=sum(effective_km)) %>%
+                ungroup() %>%
+                mutate(rolling_avg=roll_avg(effective_km,k=lag)) %>%
+                filter(date > (Sys.Date()-lag))
     ggplot() +
-    geom_col(data=plot_dat,aes(date,effective_km),width=1,col='black',fill=cols[3]) +
-    #geom_point(data=filter(plot_dat,has_activity),aes(date,effective_km),size=4,col=cols[3]) +
+    geom_line(data=plot_dat,aes(date,rolling_avg),col=cols[3]) +
+    geom_point(data=filter(plot_dat,has_activity),aes(date,effective_km),size=4,col=cols[3]) +
+    geom_abline(intercept=target_dist/(as.numeric(weeks)*7),slope=0,linetype='dashed') +
     scale_x_date(breaks = '1 day',
                  labels = icelandic_dates,
-                 expand = expansion(add = 0)) +
-    scale_y_continuous(expand=c(0,0.03)) +
-    ylab('Uppsafnaðir kílómetrar') +
+                 expand = expansion(add = 0.3)) +
+    scale_y_continuous(limits=c(0,NA)) +
+    xlab('') +
+    ylab('2 vikna hlaupandi kílómetrameðaltal ') +
     theme_classic()+
     theme(
         plot.title=element_text(size=18,face="bold"),
