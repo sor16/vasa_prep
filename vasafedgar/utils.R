@@ -24,6 +24,28 @@ save_data <- function(db,table,data) {
 #     #dbDisconnect(db)
 # }
 
+save_activity_prop <- function(db,id,activity_prop_athlete,activity_prop){
+    activity_prop_athlete_old <- filter(activity_prop,athlete_id==id)
+    if(!isTRUE(all_equal(activity_prop_athlete_old,activity_prop_athlete))){
+        if(nrow(activity_prop_athlete_old)==0){
+            activity_prop <- bind_rows(activity_prop,activity_prop_athlete)
+        }
+        activity_prop$p[activity_prop$athlete_id==id] <- activity_prop_athlete$p
+        activity_prop <- select(activity_prop,activity_type,athlete_id,p)
+        dbWriteTable(db,'ActivityProp',activity_prop,overwrite=T)
+    }
+    return(activity_prop)
+}
+
+save_target_dist <- function(db,users,athlete_id,target_dist){
+    target_dist_old <- users$target_dist[users$athlete_id==athlete_id]
+    if(is.na(target_dist_old) | target_dist_old!=target_dist){
+        users$target_dist[users$athlete_id==athlete_id] <- target_dist
+        dbWriteTable(db,'User',users,overwrite=T)
+    }
+    return(users)
+}
+
 load_data <- function(db,table) {
     # Connect to the database
     # Construct the fetching query

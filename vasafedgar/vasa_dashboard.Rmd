@@ -1,10 +1,14 @@
 ---
 title: "Vasafeðgar"
-output: 
+output:
   flexdashboard::flex_dashboard:
     orientation: rows
     vertical_layout: fill
 runtime: shiny
+resource_files:
+- auth/httr-oauth_rognvaldur
+- auth/httr-oauth_kari
+- auth/httr-oauth_solvi
 ---
 
 ```{r global, include=FALSE}
@@ -37,16 +41,18 @@ cols <- c('#BC3C29FF','#0072B5FF','#E18727FF','#20854EFF')
 con <- dbConnect(MariaDB(), dbname = database_name, host = mysql$host,
                   port = mysql$port, user = mysql$user,
                   password = mysql$password,ssl.ca='cert.pem')
-users <- load_data(con,'User')
+users <- arrange(load_data(con,'User'),name)
 activities <- update_activities(con,users)
 #activities <- load_data(con,'Activity')
+activity_types <- arrange(load_data(con,'ActivityType'),name)
+activity_prop <- arrange(load_data(con,'ActivityProp'),athlete_id,activity_type)
+
 ```
 
 ```{r}
 start_date <- as.Date('2022-08-01')
 vasa_date <- as.Date('2023-03-05')
 weeks <- difftime(vasa_date,start_date,unit='weeks')
-target_dist <- 500 #km, minus what is done
 lag <- 14
 ```
 
@@ -59,14 +65,34 @@ Sidebar {.sidebar}
 
 
 ```{r}
-radioButtons(inputId = 'athlete',label='Íþróttamaður',choices=c('Kári','Sölvi','Sæmundur','Rögnvaldur'),selected = 'Kári')
+radio_choices <- users$athlete_id
+names(radio_choices) <- users$name
+radioButtons(inputId = 'athlete_id',label='Íþróttamaður',choices=radio_choices,selected = radio_choices[1])
+textInput('target_dist',label='Markmið (km)',value=500)
 sliderInput('NordicSki',label='Gönguskíði',min=0,max=1,value = 0.2)
-sliderInput('Run',label='Hlaup',,min=0,max=1,value = 0.2)
-sliderInput('Ride','Hjól',min=0,max=1,value = 0.4)
-sliderInput('Swim','Sund',min=0,max=1,value = 0.1)
-sliderInput('Walk','Ganga',min=0,max=1,value = 0.1)
-sliderInput('Golf','Golf',min=0,max=1,value = 0)
+sliderInput('Ride','Hjól',min=0,max=1,value = 0.2)
+sliderInput('Run',label='Hlaup',min=0,max=1,value = 0.2)
+sliderInput('Swim','Sund',min=0,max=1,value = 0.2)
+sliderInput('Walk','Ganga',min=0,max=1,value = 0.2)
 actionButton('update',label='Update')
+```
+
+```{r}
+reactive_vals <- reactiveValues(activity_prop=activity_prop,users=users)
+
+observeEvent(input$athlete_id,{
+    activity_prop_athlete <- filter(reactive_vals$activity_prop,athlete_id==input$athlete_id)
+    if(nrow(activity_prop_athlete)==0){
+        p <- rep(1/nrow(activity_types),nrow(activity_types)) #if no distribution yet, use default
+    }else{
+        activity_prop_athlete <- inner_join(activity_types,activity_prop_athlete,by=c('name'='activity_type'))
+        p <- activity_prop_athlete$p
+    }
+    for(i in 1:nrow(activity_types)){
+        updateSliderInput(inputId=activity_types$name[i],value=p[i])
+    }
+    updateTextInput(inputId='target_dist',value=reactive_vals$users$target_dist[reactive_vals$users$athlete_id==input$athlete_id])
+},ignoreInit = TRUE)
 ```
 
 
@@ -75,17 +101,18 @@ Row {data-height = 450}
 
 ```{r}
 process_dat <- eventReactive(input$update,{
-    activity_names <- c('NordicSki','Run','Ride','Swim','Walk','Golf')
-    activity_ice <- c('Gönguskíði','Hlaup','Hjól','Sund','Ganga','Golf')
-    weights <- tibble(activity=activity_names,
-                      activity_ice=activity_ice,
-                      weight=c(1,2,0.5,5,0.2,0.2),
-                      p=sapply(activity_names,function(a) input[[a]]))
-    weights$p <- weights$p/sum(weights$p)
-    curr_athlete_id <- users$athlete_id[users$name==input$athlete]
-    activities_athlete <- filter(activities,athlete_id==curr_athlete_id)
-    
-    eff_km_dat <- inner_join(activities_athlete,weights,by=c('type'='activity')) %>%
+    #normalize slider probabiities
+    p_user <- unname(sapply(activity_types$name,function(a) input[[a]]))
+    p_norm <- p_user/sum(p_user)
+    for(i in 1:nrow(activity_types)){
+        updateSliderInput(inputId=activity_types$name[i],value=p_norm[i])
+    }
+    activity_prop_athlete <- mutate(activity_types,p=p_norm,athlete_id=as.integer(input$athlete_id)) %>%
+                             rename(activity_type=name,activity_type_ice=name_ice)
+    reactive_vals$activity_prop <- save_activity_prop(con,input$athlete_id,activity_prop_athlete,reactive_vals$activity_prop)
+    reactive_vals$users <- save_target_dist(con,reactive_vals$users,input$athlete_id,input$target_dist)
+    activities_athlete <- filter(activities,athlete_id==input$athlete_id)
+    eff_km_dat <- inner_join(activities_athlete,activity_prop_athlete,by=c('type'='activity_type','athlete_id')) %>%
                     filter(date>start_date) %>%
                     mutate(effective_km=weight*distance/1000) %>%
                     group_by(athlete_id) %>%
@@ -98,19 +125,19 @@ process_dat <- eventReactive(input$update,{
                 mutate(pred_dist=current_effective_km + avg_km*as.numeric(vasa_date-Sys.Date())) %>%
                 pivot_longer(cols=c('current_effective_km','pred_dist')) %>%
                 mutate(date=if_else(name=='current_effective_km',Sys.Date(),vasa_date))
-    return(list('athlete_id'=curr_athlete_id,'weights'=weights,'eff_km_dat'=eff_km_dat,'pred_dat'=pred_dat))
+    return(list('activity_prop_athlete'=activity_prop_athlete,'eff_km_dat'=eff_km_dat,'pred_dat'=pred_dat))
 })
 ```
 
 
-### Dreifing tegunda æfingar
+### <font size="5em">Dreifing æfinga</font> 
 ```{r}
 renderPlot({
-ggplot(process_dat()$weights,aes(activity_ice,p*100)) +
+ggplot(process_dat()$activity_prop_athlete,aes(activity_type_ice,p*100)) +
 geom_col(position='dodge',width=0.4,fill=cols[2]) +
 xlab('') +
 ylab('Hlutfall (%)') +
-scale_y_continuous(limits=c(0,100),expand=c(0,0)) +
+scale_y_continuous(limits=c(0,100),expand=c(0,0.2)) +
 theme_classic() +
 theme(
     plot.title=element_text(size=18,face="bold"),
@@ -119,20 +146,21 @@ theme(
     axis.text.x=element_text(size=18),
     axis.text.y=element_text(size=18)
 )
-})
+}) %>% bindEvent(input$update)
 ```
 
-### Áætlað vikuplan
+### <font size="5em">Áætlað vikuplan</font>
 ```{r}
 renderPlot({
-    mutate(process_dat()$weights,athlete_id=process_dat()$athlete_id) %>%
-    inner_join(filter(process_dat()$pred_dat,name=='current_effective_km'),by='athlete_id') %>%
-    mutate(km_left=target_dist-value,
-           weeks_left=difftime(vasa_date,date,unit='weeks'),
-           avg_left=(p*km_left/weight)/as.numeric(weeks_left)) %>%
-    ggplot(aes(activity_ice,avg_left)) +
+    week_plan <- mutate(process_dat()$activity_prop_athlete,athlete_id=as.integer(input$athlete_id)) %>%
+                 inner_join(filter(process_dat()$pred_dat,name=='current_effective_km'),by='athlete_id') %>%
+                 mutate(km_left=as.numeric(input$target_dist)-value,
+                        weeks_left=difftime(vasa_date,date,unit='weeks'),
+                        avg_left=(p*km_left/weight)/as.numeric(weeks_left))
+    ggplot(week_plan,aes(activity_type_ice,avg_left)) +
     geom_col(position='dodge',fill=cols[1],width=0.4) +
-    scale_y_continuous(expand=c(0,0)) +
+    geom_text(aes(y = avg_left, label = round(avg_left,2)),size=5, vjust = -0.2, hjust = 0.5) +
+    scale_y_continuous(limits=c(0,max(week_plan$avg_left)+5),expand=c(0,0)) +
     xlab('') +
     ylab('Meðalfjöldi kílómetra á viku fram að Vasa') +
     theme_classic() +
@@ -145,14 +173,14 @@ renderPlot({
         legend.title=element_text(size=18),
         legend.text = element_text(size=18)
     )
-})
+}) %>% bindEvent(input$update)
 ```
 
 
 Row {data-height = 550}
 -----------------------------------------------------------------------
 
-### Æfingaálag síðustu tveggja vikna
+### <font size="5em">Æfingaálag síðustu tveggja vikna</font>
 ```{r}
 renderPlot({
     plot_dat <- tibble(date=seq(ymd(min(as.Date(process_dat()$eff_km_dat$date))),ymd(Sys.Date()),by=1)) %>%
@@ -166,11 +194,11 @@ renderPlot({
     ggplot() +
     geom_line(data=plot_dat,aes(date,rolling_avg),col=cols[3]) +
     geom_point(data=filter(plot_dat,has_activity),aes(date,effective_km),size=4,col=cols[3]) +
-    geom_abline(intercept=target_dist/(as.numeric(weeks)*7),slope=0,linetype='dashed') +
+    geom_abline(intercept=as.numeric(input$target_dist)/(as.numeric(weeks)*7),slope=0,linetype='dashed') +
     scale_x_date(breaks = '1 day',
                  labels = icelandic_dates,
                  expand = expansion(add = 0.3)) +
-    scale_y_continuous(limits=c(0,NA)) +
+    scale_y_continuous(limits=c(0,NA),expand = expansion(add = 0.6)) +
     xlab('') +
     ylab('2 vikna hlaupandi kílómetrameðaltal ') +
     theme_classic()+
@@ -184,21 +212,22 @@ renderPlot({
         legend.text = element_text(size=18),
         plot.margin=unit(c(0,1,0,0),'cm')
     )
-})
+}) %>% bindEvent(input$update)
 ```
 
-### Uppsafnaðir kílómetrar
+### <font size="5em">Uppsafnaðir kílómetrar</font>
 ```{r}
 renderPlot({
+    max_y <- max(as.numeric(input$target_dist),max(process_dat()$pred_dat$value))
     ggplot(process_dat()$eff_km_dat,aes(as.Date(date),cum_effective_km)) +
     geom_step(size=2,col=cols[4]) +
     geom_point(size=4,col=cols[4]) +
     geom_line(data=process_dat()$pred_dat,aes(date,value),linetype='dashed',col=cols[4]) +
-    geom_abline(intercept = target_dist,slope=0) +
+    geom_abline(intercept = as.numeric(input$target_dist),slope=0) +
     scale_x_date(breaks = '1 month',
                  labels = icelandic_months,
                  expand = expansion(add = 0)) +
-    scale_y_continuous(breaks=seq(0,1000,by=100)) +
+    scale_y_continuous(breaks=seq(0,max_y+50,by=100),limits=c(0,max_y+50)) +
     xlab('Mánuður') +
     ylab('Uppsafnaðir kílómetrar') +
     theme_classic()+
@@ -212,7 +241,7 @@ renderPlot({
         legend.text = element_text(size=18),
         plot.margin=unit(c(0,1,0,0),'cm')
     )
-})
+}) %>% bindEvent(input$update)
 ```
 
 
