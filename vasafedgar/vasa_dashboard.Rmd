@@ -39,6 +39,13 @@ cols <- c('#BC3C29FF','#0072B5FF','#E18727FF','#20854EFF')
 ```
 
 ```{r}
+start_date <- as.Date('2022-09-01')
+vasa_date <- as.Date('2023-03-05')
+weeks <- difftime(vasa_date,start_date,unit='weeks')
+lag <- 14
+```
+
+```{r}
 con <- dbConnect(MariaDB(), dbname = database_name, host = mysql$host,
                   port = mysql$port, user = mysql$user,
                   password = mysql$password,ssl.ca='cert.pem')
@@ -49,14 +56,6 @@ activity_types <- arrange(load_data(con,'ActivityType'),name)
 activity_prop <- arrange(load_data(con,'ActivityProp'),athlete_id,activity_type)
 
 ```
-
-```{r}
-start_date <- as.Date('2022-08-01')
-vasa_date <- as.Date('2023-03-05')
-weeks <- difftime(vasa_date,start_date,unit='weeks')
-lag <- 14
-```
-
 
 Þolþjálfun {data-icon="fa-heart"}
 =======================================================================
@@ -114,11 +113,11 @@ process_dat <- eventReactive(input$update,{
     reactive_vals$users <- save_target_dist(con,reactive_vals$users,input$athlete_id,input$target_dist)
     activities_athlete <- filter(activities,athlete_id==input$athlete_id)
     eff_km_dat <- inner_join(activities_athlete,activity_prop_athlete,by=c('type'='activity_type','athlete_id')) %>%
-                    filter(date>start_date) %>%
-                    mutate(effective_km=weight*distance/1000) %>%
-                    group_by(athlete_id) %>%
-                    mutate(cum_effective_km=cumsum(effective_km)) %>%
-                    ungroup()
+                  filter(date>=start_date) %>%
+                  mutate(effective_km=weight*distance/1000) %>%
+                  group_by(athlete_id) %>%
+                  mutate(cum_effective_km=cumsum(effective_km)) %>%
+                  ungroup()
     
     pred_dat <- filter(eff_km_dat,date>=(Sys.Date()-lag)) %>%
                 group_by(athlete_id) %>%
@@ -126,6 +125,7 @@ process_dat <- eventReactive(input$update,{
                 mutate(pred_dist=current_effective_km + avg_km*as.numeric(vasa_date-Sys.Date())) %>%
                 pivot_longer(cols=c('current_effective_km','pred_dist')) %>%
                 mutate(date=if_else(name=='current_effective_km',Sys.Date(),vasa_date))
+
     return(list('activity_prop_athlete'=activity_prop_athlete,'eff_km_dat'=eff_km_dat,'pred_dat'=pred_dat))
 })
 ```
