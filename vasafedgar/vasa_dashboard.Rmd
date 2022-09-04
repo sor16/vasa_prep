@@ -9,6 +9,7 @@ resource_files:
 - auth/httr-oauth_rognvaldur
 - auth/httr-oauth_kari
 - auth/httr-oauth_solvi
+- auth/httr-oauth_saemundur
 ---
 
 ```{r global, include=FALSE}
@@ -183,7 +184,7 @@ Row {data-height = 550}
 ### <font size="5em">Æfingaálag síðustu tveggja vikna</font>
 ```{r}
 renderPlot({
-    plot_dat <- tibble(date=seq(ymd(min(as.Date(process_dat()$eff_km_dat$date))),ymd(Sys.Date()),by=1)) %>%
+    plot_dat <- tibble(date=seq(ymd(start_date),ymd(Sys.Date()),by=1)) %>%
                 left_join(mutate(process_dat()$eff_km_dat,date=ymd(as.Date(date))),by='date') %>%
                 mutate(effective_km=ifelse(is.na(effective_km),0,effective_km)) %>%
                 group_by(date) %>%
@@ -218,7 +219,7 @@ renderPlot({
 ### <font size="5em">Uppsafnaðir kílómetrar</font>
 ```{r}
 renderPlot({
-    max_y <- max(as.numeric(input$target_dist),max(process_dat()$pred_dat$value))
+    max_y <- max(as.numeric(input$target_dist),max(process_dat()$pred_dat$value,na.rm=F))
     ggplot(process_dat()$eff_km_dat,aes(as.Date(date),cum_effective_km)) +
     geom_step(size=2,col=cols[4]) +
     geom_point(size=4,col=cols[4]) +
