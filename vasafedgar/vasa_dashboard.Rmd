@@ -39,7 +39,7 @@ cols <- c('#BC3C29FF','#0072B5FF','#E18727FF','#20854EFF')
 ```
 
 ```{r}
-start_date <- as.Date('2022-09-01')
+start_date <- as.Date('2022-09-05')
 vasa_date <- as.Date('2023-03-05')
 weeks <- difftime(vasa_date,start_date,unit='weeks')
 lag <- 14
@@ -50,7 +50,7 @@ con <- dbConnect(MariaDB(), dbname = database_name, host = mysql$host,
                   port = mysql$port, user = mysql$user,
                   password = mysql$password,ssl.ca='cert.pem')
 users <- arrange(load_data(con,'User'),name)
-activities <- update_activities(con,users)
+activities <- update_activities(con,users) 
 #activities <- load_data(con,'Activity')
 activity_types <- arrange(load_data(con,'ActivityType'),name)
 activity_prop <- arrange(load_data(con,'ActivityProp'),athlete_id,activity_type)
