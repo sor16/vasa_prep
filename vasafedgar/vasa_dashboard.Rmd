@@ -15,6 +15,7 @@ resource_files:
 ```{r global, include=FALSE}
 library(ggplot2)
 library(lubridate)
+library(plotly)
 source('account_info.R')
 source('utils.R')
 ```
@@ -22,8 +23,10 @@ source('utils.R')
 ```{r}
 #for plots
 icelandic_months <- function(x) {
-    months <- c("janúar", "febrúar", "mars", "apríl", "maí", "júní", 
-                "júlí", "ágúst", "september", "október", "nóvember", "desember")
+    # months <- c("janúar", "febrúar", "mars", "apríl", "maí", "júní", 
+    #             "júlí", "ágúst", "september", "október", "nóvember", "desember")
+    months <- c("jan", "feb", "mars", "apr", "maí", "jún", 
+            "júl", "ág", "sept", "okt", "nóv", "des")
     
     #paste0(mday(x), ". ", months[month(x)])
     months[month(x)]
@@ -50,7 +53,8 @@ con <- dbConnect(MariaDB(), dbname = database_name, host = mysql$host,
                   port = mysql$port, user = mysql$user,
                   password = mysql$password,ssl.ca='cert.pem')
 users <- arrange(load_data(con,'User'),name)
-activities <- update_activities(con,users) 
+activities <- update_activities(con,users) %>%
+              mutate(type=ifelse(type=='Golf','Walk',type)) #hack to allow golf activities
 #activities <- load_data(con,'Activity')
 activity_types <- arrange(load_data(con,'ActivityType'),name)
 activity_prop <- arrange(load_data(con,'ActivityProp'),athlete_id,activity_type)
@@ -114,14 +118,17 @@ process_dat <- eventReactive(input$update,{
     activities_athlete <- filter(activities,athlete_id==input$athlete_id)
     eff_km_dat <- inner_join(activities_athlete,activity_prop_athlete,by=c('type'='activity_type','athlete_id')) %>%
                   filter(date>=start_date) %>%
-                  mutate(effective_km=weight*distance/1000) %>%
+                  mutate(effective_km=weight*distance/1000,
+                         distance=round(distance/1000,digits=1),
+                         time_min=floor(time/60),
+                         time_sec=round((time/60-time_min)*60)) %>%
                   group_by(athlete_id) %>%
                   mutate(cum_effective_km=cumsum(effective_km)) %>%
                   ungroup()
     
     pred_dat <- filter(eff_km_dat,date>=(Sys.Date()-lag)) %>%
                 group_by(athlete_id) %>%
-                summarise(avg_km=sum(effective_km)/lag,current_effective_km=max(cum_effective_km)) %>%
+                summarise(avg_km=sum(effective_km)/min(lag,as.numeric(Sys.Date()-start_date)+1),current_effective_km=max(cum_effective_km)) %>%
                 mutate(pred_dist=current_effective_km + avg_km*as.numeric(vasa_date-Sys.Date())) %>%
                 pivot_longer(cols=c('current_effective_km','pred_dist')) %>%
                 mutate(date=if_else(name=='current_effective_km',Sys.Date(),vasa_date))
@@ -163,7 +170,7 @@ renderPlot({
     geom_text(aes(y = avg_left, label = round(avg_left,2)),size=5, vjust = -0.2, hjust = 0.5) +
     scale_y_continuous(limits=c(0,max(week_plan$avg_left)+5),expand=c(0,0)) +
     xlab('') +
-    ylab('Meðalfjöldi kílómetra á viku fram að Vasa') +
+    ylab('Meðalfjöldi kílómetra á viku') +
     theme_classic() +
     theme(
         plot.title=element_text(size=18,face="bold"),
@@ -183,65 +190,78 @@ Row {data-height = 550}
 
 ### <font size="5em">Æfingaálag síðustu tveggja vikna</font>
 ```{r}
-renderPlot({
+renderPlotly({
     plot_dat <- tibble(date=seq(ymd(start_date),ymd(Sys.Date()),by=1)) %>%
                 left_join(mutate(process_dat()$eff_km_dat,date=ymd(as.Date(date))),by='date') %>%
                 mutate(effective_km=ifelse(is.na(effective_km),0,effective_km)) %>%
                 group_by(date) %>%
-                summarise(has_activity=any(!is.na(athlete_id)),effective_km=sum(effective_km)) %>%
+                summarise(has_activity=any(!is.na(athlete_id)),
+                          effective_km=sum(effective_km),
+                          `Lýsing`=paste0('</br></br>Tegund - ',paste(activity_type_ice,collapse=';'),
+                                      '</br>Lengd - ',paste(paste0(distance,' km'),collapse=';'),
+                                      '</br>Tími - ',paste(paste0(time_min,':',time_sec,' mín'),collapse=';'),
+                                      '</br>Meðalpúls - ',paste(avg_heartrate,collapse=';'))) %>%
                 ungroup() %>%
                 mutate(rolling_avg=roll_avg(effective_km,k=lag)) %>%
                 filter(date > (Sys.Date()-lag))
-    ggplot() +
-    geom_line(data=plot_dat,aes(date,rolling_avg),col=cols[3]) +
-    geom_point(data=filter(plot_dat,has_activity),aes(date,effective_km),size=4,col=cols[3]) +
-    geom_abline(intercept=as.numeric(input$target_dist)/(as.numeric(weeks)*7),slope=0,linetype='dashed') +
-    scale_x_date(breaks = '1 day',
-                 labels = icelandic_dates,
-                 expand = expansion(add = 0.3)) +
-    scale_y_continuous(limits=c(0,NA),expand = expansion(add = 0.6)) +
-    xlab('') +
-    ylab('2 vikna hlaupandi kílómetrameðaltal ') +
-    theme_classic()+
-    theme(
-        plot.title=element_text(size=18,face="bold"),
-        axis.title.x=element_text(size=18),
-        axis.title.y=element_text(size=18),
-        axis.text.x=element_text(size=18),
-        axis.text.y=element_text(size=18),
-        legend.title=element_text(size=18),
-        legend.text = element_text(size=18),
-        plot.margin=unit(c(0,1,0,0),'cm')
+    p <- ggplot() +
+        geom_line(data=plot_dat,aes(date,rolling_avg),col=cols[3]) +
+        geom_point(data=filter(plot_dat,has_activity),aes(date,effective_km,label=`Lýsing`),size=4,col=cols[3]) +
+        geom_abline(intercept=as.numeric(input$target_dist)/(as.numeric(weeks)*7),slope=0,linetype='dashed') +
+        scale_x_date(breaks = '1 day',
+                     labels = icelandic_dates,
+                     expand = expansion(add = 0.3)) +
+        scale_y_continuous(limits=c(0,NA),expand = expansion(add = 0.6)) +
+        xlab('') +
+        ylab('Kílómetrar') +
+        theme_classic()+
+        theme(
+            plot.title=element_text(size=18,face="bold"),
+            axis.title.x=element_text(size=18),
+            axis.title.y=element_text(size=18),
+            axis.text.x=element_text(size=18),
+            axis.text.y=element_text(size=18),
+            legend.title=element_text(size=18),
+            legend.text = element_text(size=18),
+            plot.margin=unit(c(0,1,0,0),'cm')
     )
+    ggplotly(p,tooltip='label')
 }) %>% bindEvent(input$update)
 ```
 
 ### <font size="5em">Uppsafnaðir kílómetrar</font>
 ```{r}
-renderPlot({
+renderPlotly({
     max_y <- max(as.numeric(input$target_dist),max(process_dat()$pred_dat$value,na.rm=F))
-    ggplot(process_dat()$eff_km_dat,aes(as.Date(date),cum_effective_km)) +
-    geom_step(size=2,col=cols[4]) +
-    geom_point(size=4,col=cols[4]) +
-    geom_line(data=process_dat()$pred_dat,aes(date,value),linetype='dashed',col=cols[4]) +
-    geom_abline(intercept = as.numeric(input$target_dist),slope=0) +
-    scale_x_date(breaks = '1 month',
-                 labels = icelandic_months,
-                 expand = expansion(add = 0)) +
-    scale_y_continuous(breaks=seq(0,max_y+50,by=100),limits=c(0,max_y+50)) +
-    xlab('Mánuður') +
-    ylab('Uppsafnaðir kílómetrar') +
-    theme_classic()+
-    theme(
-        plot.title=element_text(size=18,face="bold"),
-        axis.title.x=element_text(size=18),
-        axis.title.y=element_text(size=18),
-        axis.text.x=element_text(size=18),
-        axis.text.y=element_text(size=18),
-        legend.title=element_text(size=18),
-        legend.text = element_text(size=18),
-        plot.margin=unit(c(0,1,0,0),'cm')
-    )
+    plot_dat <- mutate(process_dat()$eff_km_dat,`Lýsing`=paste0('</br></br>Dagsetning - ',date,
+                                                                '</br>Tegund - ',activity_type_ice,
+                                                                '</br>Lengd - ',paste0(distance,' km'),
+                                                                '</br>Tími - ',paste0(time_min,':',time_sec,' mín'),
+                                                                '</br>Meðalpúls - ',avg_heartrate))
+    p <-ggplot(data=plot_dat,aes(as.Date(date),cum_effective_km)) +
+        geom_step(size=2,col=cols[4]) +
+        geom_point(aes(label=`Lýsing`),size=4,col=cols[4]) +
+        geom_line(data=process_dat()$pred_dat,aes(date,value),linetype='dashed',col=cols[4]) +
+        geom_abline(intercept = as.numeric(input$target_dist),slope=0) +
+        scale_x_date(breaks = '1 month',
+                     limits=c(ymd(trunc(start_date,'month')),ymd(vasa_date)),
+                     labels = icelandic_months,
+                     expand = expansion(add = 0)) +
+        scale_y_continuous(breaks=seq(0,max_y+50,by=100),limits=c(0,max_y+50)) +
+        xlab('Mánuður') +
+        ylab('Uppsafnaðir kílómetrar') +
+        theme_classic()+
+        theme(
+            plot.title=element_text(size=18,face="bold"),
+            axis.title.x=element_text(size=18),
+            axis.title.y=element_text(size=18),
+            axis.text.x=element_text(size=18),
+            axis.text.y=element_text(size=18),
+            legend.title=element_text(size=18),
+            legend.text = element_text(size=18),
+            plot.margin=unit(c(0,1,0,0),'cm')
+        )
+    ggplotly(p,tooltip='label')
 }) %>% bindEvent(input$update)
 ```
 
