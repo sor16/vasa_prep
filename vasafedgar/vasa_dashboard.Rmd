@@ -119,7 +119,7 @@ process_dat <- eventReactive(input$update,{
     eff_km_dat <- inner_join(activities_athlete,activity_prop_athlete,by=c('type'='activity_type','athlete_id')) %>%
                   filter(date>=start_date) %>%
                   mutate(effective_km=weight*distance/1000,
-                         distance=round(distance/1000,digits=1),
+                         distance_km=round(distance/1000,digits=1),
                          time_min=floor(time/60),
                          time_sec=round((time/60-time_min)*60)) %>%
                   group_by(athlete_id) %>%
@@ -165,10 +165,18 @@ renderPlot({
                  mutate(km_left=as.numeric(input$target_dist)-value,
                         weeks_left=difftime(vasa_date,date,unit='weeks'),
                         avg_left=(p*km_left/weight)/as.numeric(weeks_left))
-    ggplot(week_plan,aes(activity_type_ice,avg_left)) +
-    geom_col(position='dodge',fill=cols[1],width=0.4) +
-    geom_text(aes(y = avg_left, label = round(avg_left,2)),size=5, vjust = -0.2, hjust = 0.5) +
-    scale_y_continuous(limits=c(0,max(week_plan$avg_left)+5),expand=c(0,0)) +
+    plot_dat <- filter(process_dat()$eff_km_dat,date>=floor_date(ymd(Sys.Date()), "week", 1)) %>% 
+                group_by(activity_type_ice) %>% 
+                summarise(cum_km=sum(distance/1000)) %>%
+                left_join(select(week_plan,activity_type_ice,avg_left),.,by='activity_type_ice') %>%
+                mutate(cum_km=ifelse(is.na(cum_km),0,cum_km)) %>%
+                pivot_longer(cols=c('avg_left','cum_km'),names_to='type',values_to='dist') %>%
+                mutate(type_ice=ifelse(type=='avg_left','Áætlun','Lokið'))
+    ggplot(plot_dat,aes(activity_type_ice,dist,fill=type_ice)) +
+    geom_col(position='dodge',width=0.4) +
+    geom_text(data=filter(plot_dat,type=='avg_left',dist!=0),aes(y = dist, label = round(dist,2)),size=5, vjust = -0.2, hjust = 0.75) +
+    scale_fill_manual(values=c(cols[1],'grey'),name='') +
+    scale_y_continuous(limits=c(0,max(plot_dat$dist)+5),expand=c(0,0)) +
     xlab('') +
     ylab('Meðalfjöldi kílómetra á viku') +
     theme_classic() +
@@ -198,7 +206,7 @@ renderPlotly({
                 summarise(has_activity=any(!is.na(athlete_id)),
                           effective_km=sum(effective_km),
                           `Lýsing`=paste0('</br></br>Tegund - ',paste(activity_type_ice,collapse=';'),
-                                      '</br>Lengd - ',paste(paste0(distance,' km'),collapse=';'),
+                                      '</br>Lengd - ',paste(paste0(distance_km,' km'),collapse=';'),
                                       '</br>Tími - ',paste(paste0(time_min,':',time_sec,' mín'),collapse=';'),
                                       '</br>Meðalpúls - ',paste(avg_heartrate,collapse=';'))) %>%
                 ungroup() %>%
@@ -235,7 +243,7 @@ renderPlotly({
     max_y <- max(as.numeric(input$target_dist),max(process_dat()$pred_dat$value,na.rm=F))
     plot_dat <- mutate(process_dat()$eff_km_dat,`Lýsing`=paste0('</br></br>Dagsetning - ',date,
                                                                 '</br>Tegund - ',activity_type_ice,
-                                                                '</br>Lengd - ',paste0(distance,' km'),
+                                                                '</br>Lengd - ',paste0(distance_km,' km'),
                                                                 '</br>Tími - ',paste0(time_min,':',time_sec,' mín'),
                                                                 '</br>Meðalpúls - ',avg_heartrate))
     p <-ggplot(data=plot_dat,aes(as.Date(date),cum_effective_km)) +
