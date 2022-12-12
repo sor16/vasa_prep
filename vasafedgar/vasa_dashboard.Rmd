@@ -55,7 +55,7 @@ con <- dbConnect(MariaDB(), dbname = database_name, host = mysql$host,
 users <- arrange(load_data(con,'User'),name)
 activities <- update_activities(con,users) %>%
               mutate(type=ifelse(type %in% c('Hike','Golf'),'Walk',type),
-                     type=ifelse(type %in% c('Ride','VirtualRide'),'Walk',type)) #hack to allow golf activities
+                     type=ifelse(type %in% c('Ride','VirtualRide'),'Ride',type)) #hack to allow golf activities
 # activities <- load_data(con,'Activity') %>%
 #               mutate(type=ifelse(type %in% c('Hike','Golf'),'Walk',type)) #hack to allow golf activities
 activity_types <- arrange(load_data(con,'ActivityType'),name)
