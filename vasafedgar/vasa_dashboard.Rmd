@@ -57,7 +57,8 @@ activities <- update_activities(con,users) %>%
               mutate(type=ifelse(type %in% c('Hike','Golf'),'Walk',type),
                      type=ifelse(type %in% c('Ride','VirtualRide'),'Ride',type)) #hack to allow golf activities
 # activities <- load_data(con,'Activity') %>%
-#               mutate(type=ifelse(type %in% c('Hike','Golf'),'Walk',type)) #hack to allow golf activities
+#               mutate(type=ifelse(type %in% c('Hike','Golf'),'Walk',type),
+#                      type=ifelse(type %in% c('Ride','VirtualRide'),'Ride',type)) #hack to allow golf activities
 activity_types <- arrange(load_data(con,'ActivityType'),name)
 activity_prop <- arrange(load_data(con,'ActivityProp'),athlete_id,activity_type)
 
@@ -128,12 +129,18 @@ process_dat <- eventReactive(input$update,{
                   mutate(cum_effective_km=cumsum(effective_km)) %>%
                   ungroup()
     
-    pred_dat <- filter(eff_km_dat,date>=(Sys.Date()-lag)) %>%
-                group_by(athlete_id) %>%
-                summarise(avg_km=sum(effective_km)/min(lag,as.numeric(Sys.Date()-start_date)+1),current_effective_km=max(cum_effective_km)) %>%
-                mutate(pred_dist=current_effective_km + avg_km*as.numeric(vasa_date-Sys.Date())) %>%
+    pred_names <- c('current_effective_km','pred_dist')
+    pred_dat_template <- expand_grid(athlete_id=unique(activity_prop_athlete$athlete_id),
+                                     name=pred_names)
+    pred_dat <- group_by(eff_km_dat,athlete_id) %>%
+                filter(if(!any(date>=(Sys.Date()-lag))) date==max(date) else date>=(Sys.Date()-lag)) %>%
+                summarise(avg_km=sum(effective_km)/min(lag,as.numeric(Sys.Date()-start_date)+1),
+                          current_effective_km=max(cum_effective_km),
+                          num_activities=sum(date>=(Sys.Date()-lag))) %>%
+                mutate(pred_dist=current_effective_km + (num_activities>0)*avg_km*as.numeric(vasa_date-Sys.Date())) %>%
                 pivot_longer(cols=c('current_effective_km','pred_dist')) %>%
                 mutate(date=if_else(name=='current_effective_km',Sys.Date(),vasa_date))
+    print(pred_dat)
 
     return(list('activity_prop_athlete'=activity_prop_athlete,'eff_km_dat'=eff_km_dat,'pred_dat'=pred_dat))
 })
@@ -209,15 +216,17 @@ renderPlotly({
                           effective_km=sum(effective_km),
                           `Lýsing`=paste0('</br></br>Tegund - ',paste(activity_type_ice,collapse=';'),
                                       '</br>Lengd - ',paste(paste0(distance_km,' km'),collapse=';'),
-                                      '</br>Tími - ',paste(paste0(time_min,':',time_sec,' mín'),collapse=';'),
+                                      '</br>Tími - ',paste(paste0(time_min,':',ifelse(time_sec<10,'0',''),time_sec,' mín'),collapse=';'),
                                       '</br>Meðalpúls - ',paste(avg_heartrate,collapse=';'))) %>%
                 ungroup() %>%
                 mutate(rolling_avg=roll_avg(effective_km,k=lag)) %>%
                 filter(date > (Sys.Date()-lag))
+    avg_km_left <- (as.numeric(input$target_dist)-with(process_dat()$pred_dat,value[name=='current_effective_km'])) / as.numeric(difftime(vasa_date,Sys.Date(),unit='days'))
+    print(avg_km_left)
     p <- ggplot() +
         geom_line(data=plot_dat,aes(date,rolling_avg),col=cols[3]) +
         geom_point(data=filter(plot_dat,has_activity),aes(date,effective_km,label=`Lýsing`),size=4,col=cols[3]) +
-        geom_abline(intercept=as.numeric(input$target_dist)/(as.numeric(weeks)*7),slope=0,linetype='dashed') +
+        geom_abline(intercept = avg_km_left,slope=0,linetype='dashed') +
         scale_x_date(breaks = '2 day',
                      labels = icelandic_dates,
                      expand = expansion(add = 0.3)) +
@@ -243,18 +252,22 @@ renderPlotly({
 ```{r}
 renderPlotly({
     max_y <- max(as.numeric(input$target_dist),max(process_dat()$pred_dat$value,na.rm=F))
-    plot_dat <- mutate(process_dat()$eff_km_dat,`Lýsing`=paste0('</br></br>Dagsetning - ',date,
+    plot_dat <- mutate(process_dat()$eff_km_dat,`Lýsing`=paste0('</br></br>Dagsetning - ',ymd(as.Date(date)),
                                                                 '</br>Tegund - ',activity_type_ice,
                                                                 '</br>Lengd - ',paste0(distance_km,' km'),
-                                                                '</br>Tími - ',paste0(time_min,':',time_sec,' mín'),
-                                                                '</br>Meðalpúls - ',avg_heartrate))
+                                                                '</br>Tími - ',paste0(time_min,':',ifelse(time_sec<10,'0',''),time_sec,' mín'),
+                                                                '</br>Meðalpúls - ',avg_heartrate,
+                                                                '</br>Uppsafnað - ',round(cum_effective_km,1)))
+    print(head(plot_dat))
+    print(head(process_dat()$pred_dat))
     p <-ggplot(data=plot_dat,aes(as.Date(date),cum_effective_km)) +
         geom_step(size=2,col=cols[4]) +
         geom_point(aes(label=`Lýsing`),size=4,col=cols[4]) +
         geom_line(data=process_dat()$pred_dat,aes(date,value),linetype='dashed',col=cols[4]) +
         geom_abline(intercept = as.numeric(input$target_dist),slope=0) +
+        geom_text(data=process_dat()$pred_dat,aes(date,round(value)+50,label=round(value))) +
         scale_x_date(breaks = '1 month',
-                     limits=c(ymd(trunc(start_date,'month')),ymd(vasa_date)),
+                     limits=c(ymd(trunc(start_date,'month')),ymd(vasa_date)+14),
                      labels = icelandic_months,
                      expand = expansion(add = 0)) +
         scale_y_continuous(breaks=seq(0,max_y+50,by=100),limits=c(0,max_y+50)) +
