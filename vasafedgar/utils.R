@@ -98,3 +98,44 @@ activity_list_to_table <- function(activity_list,athlete_id){
                           'description'='')
     }) %>% bind_rows()  
 }
+
+### Summary plots
+
+plot_summary_var <- function(summary_dat,var,title){
+    summary_dat_time <- filter(summary_dat,name==var)
+    colors <- c("Hlaup"="#BC3C29FF","Hjól"="#0072B5FF", "Gönguskíði"="#E18727FF","Ganga"="#20854EFF","Sund"="#7876B1FF")
+    colors <- colors[summary_dat_time$name_ice]
+    
+    p <- ggplot(data=summary_dat_time) +
+        geom_col(aes(x=name_ice,y=p,fill=name_ice)) +
+        geom_text(aes(x=name_ice,y=p,label=paste0(format(round(100*p,1),nsmall=1),'%')),nudge_y=0.06,nudge_x=0.2) +
+        geom_text(aes(x=name_ice,y=p,label=paste0(format(round(value,1),nsmall=1),ifelse(var=='tot_time','h','km'))),nudge_y=ifelse(var=='tot_time',0.06,0.08),nudge_x=-0.2) +
+        coord_flip() +
+        scale_y_continuous(limits=c(0,1)) +
+        scale_fill_manual(values=colors,breaks=names(colors)) +
+        ggtitle(title) +
+        theme_classic() +
+        theme(axis.line = element_blank(),
+              axis.ticks = element_blank(),
+              axis.text = element_blank(),
+              axis.title = element_blank(),
+              legend.title = element_blank())
+    
+    if(var=='tot_eff_distance'){
+        p <- p + theme(legend.position='none')
+    }
+    return(p)
+}
+
+plot_summary_athlete <- function(activities_mapped,athlete_name){
+    summary_dat <- filter(activities_mapped,name==athlete_name) %>% 
+                    group_by(name_ice) %>% 
+                    summarise(tot_time=sum(time)/(60*60),
+                              tot_distance=sum(distance)/1e3,
+                              tot_eff_distance=sum(weight*distance)/1e3) %>%
+                    pivot_longer(cols=c('tot_time','tot_eff_distance')) %>%
+                    group_by(name) %>%
+                    mutate(p=value/sum(value))
+    plot_summary_var(summary_dat,var='tot_time',title='Tímalengd æfinga') /
+    plot_summary_var(summary_dat,var='tot_eff_distance',title='Umreiknuð vegalengd')
+}
