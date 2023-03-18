@@ -1,0 +1,2152 @@
+[
+  {
+    "name": "Aasheim, \u00d8ystein (NOR)",
+    "start_group": "VL2",
+    "splits": [
+      {
+        "desc": "H\u00f6gsta punkten",
+        "time": "00:18:26",
+        "diff": "18:27",
+        "min_km": "06:09",
+        "kmh": "9.76",
+        "place": "745"
+      },
+      {
+        "desc": "Sm\u00e5gan",
+        "time": "00:40:44",
+        "diff": "22:18",
+        "min_km": "02:48",
+        "kmh": "21.52",
+        "place": "766"
+      },
+      {
+        "desc": "M\u00e5ngsbodarna",
+        "time": "01:18:29",
+        "diff": "37:45",
+        "min_km": "02:55",
+        "kmh": "20.66",
+        "place": "766"
+      },
+      {
+        "desc": "Risberg",
+        "time": "01:50:31",
+        "diff": "32:02",
+        "min_km": "02:55",
+        "kmh": "20.60",
+        "place": "767"
+      },
+      {
+        "desc": "Evertsberg",
+        "time": "02:35:27",
+        "diff": "44:56",
+        "min_km": "03:45",
+        "kmh": "16.02",
+        "place": "804"
+      },
+      {
+        "desc": "Oxberg",
+        "time": "03:20:42",
+        "diff": "45:15",
+        "min_km": "03:01",
+        "kmh": "19.89",
+        "place": "831"
+      },
+      {
+        "desc": "H\u00f6kberg",
+        "time": "03:52:14",
+        "diff": "31:32",
+        "min_km": "03:31",
+        "kmh": "17.12",
+        "place": "826"
+      },
+      {
+        "desc": "Eldris",
+        "time": "04:26:41",
+        "diff": "34:27",
+        "min_km": "03:27",
+        "kmh": "17.42",
+        "place": "860"
+      },
+      {
+        "desc": "Mora F\u00f6rvarning",
+        "time": "04:53:56",
+        "diff": "27:15",
+        "min_km": "03:15",
+        "kmh": "18.50",
+        "place": null
+      },
+      {
+        "desc": "Time Total (Brutto)",
+        "time": "04:55:41",
+        "diff": "01:45",
+        "min_km": "02:56",
+        "kmh": "20.57",
+        "place": "865"
+      }
+    ]
+  },
+  {
+    "name": "Aasheim, Even (NOR)",
+    "start_group": "VL5",
+    "splits": [
+      {
+        "desc": "H\u00f6gsta punkten",
+        "time": "00:31:58",
+        "diff": "31:59",
+        "min_km": "10:40",
+        "kmh": "5.63",
+        "place": "3052"
+      },
+      {
+        "desc": "Sm\u00e5gan",
+        "time": "00:56:57",
+        "diff": "24:59",
+        "min_km": "03:08",
+        "kmh": "19.21",
+        "place": "2743"
+      },
+      {
+        "desc": "M\u00e5ngsbodarna",
+        "time": "01:41:38",
+        "diff": "44:41",
+        "min_km": "03:27",
+        "kmh": "17.46",
+        "place": "2533"
+      },
+      {
+        "desc": "Risberg",
+        "time": "02:19:37",
+        "diff": "37:59",
+        "min_km": "03:28",
+        "kmh": "17.38",
+        "place": "2413"
+      },
+      {
+        "desc": "Evertsberg",
+        "time": "03:11:36",
+        "diff": "51:59",
+        "min_km": "04:20",
+        "kmh": "13.85",
+        "place": "2327"
+      },
+      {
+        "desc": "Oxberg",
+        "time": "04:03:42",
+        "diff": "52:06",
+        "min_km": "03:29",
+        "kmh": "17.27",
+        "place": "2279"
+      },
+      {
+        "desc": "H\u00f6kberg",
+        "time": "04:41:50",
+        "diff": "38:08",
+        "min_km": "04:15",
+        "kmh": "14.16",
+        "place": "2277"
+      },
+      {
+        "desc": "Eldris",
+        "time": "05:22:11",
+        "diff": "40:21",
+        "min_km": "04:03",
+        "kmh": "14.87",
+        "place": "2277"
+      },
+      {
+        "desc": "Mora F\u00f6rvarning",
+        "time": "05:52:05",
+        "diff": "29:54",
+        "min_km": "03:34",
+        "kmh": "16.86",
+        "place": null
+      },
+      {
+        "desc": "Time Total (Brutto)",
+        "time": "05:53:51",
+        "diff": "01:46",
+        "min_km": "02:57",
+        "kmh": "20.38",
+        "place": "2237"
+      }
+    ]
+  },
+  {
+    "name": "Aaseth, Eirik (NOR)",
+    "start_group": "VL1",
+    "splits": [
+      {
+        "desc": "H\u00f6gsta punkten",
+        "time": "00:16:19",
+        "diff": "16:20",
+        "min_km": "05:27",
+        "kmh": "11.02",
+        "place": "448"
+      },
+      {
+        "desc": "Sm\u00e5gan",
+        "time": "00:37:00",
+        "diff": "20:41",
+        "min_km": "02:36",
+        "kmh": "23.21",
+        "place": "429"
+      },
+      {
+        "desc": "M\u00e5ngsbodarna",
+        "time": "01:12:32",
+        "diff": "35:32",
+        "min_km": "02:44",
+        "kmh": "21.95",
+        "place": "437"
+      },
+      {
+        "desc": "Risberg",
+        "time": "01:42:51",
+        "diff": "30:19",
+        "min_km": "02:46",
+        "kmh": "21.77",
+        "place": "436"
+      },
+      {
+        "desc": "Evertsberg",
+        "time": "02:24:35",
+        "diff": "41:44",
+        "min_km": "03:29",
+        "kmh": "17.25",
+        "place": "446"
+      },
+      {
+        "desc": "Oxberg",
+        "time": "03:05:54",
+        "diff": "41:19",
+        "min_km": "02:46",
+        "kmh": "21.78",
+        "place": "453"
+      },
+      {
+        "desc": "H\u00f6kberg",
+        "time": "03:35:24",
+        "diff": "29:30",
+        "min_km": "03:17",
+        "kmh": "18.31",
+        "place": "453"
+      },
+      {
+        "desc": "Eldris",
+        "time": "04:06:54",
+        "diff": "31:30",
+        "min_km": "03:09",
+        "kmh": "19.05",
+        "place": "458"
+      },
+      {
+        "desc": "Mora F\u00f6rvarning",
+        "time": "04:32:15",
+        "diff": "25:21",
+        "min_km": "03:02",
+        "kmh": "19.88",
+        "place": null
+      },
+      {
+        "desc": "Time Total (Brutto)",
+        "time": "04:33:58",
+        "diff": "01:43",
+        "min_km": "02:52",
+        "kmh": "20.97",
+        "place": "458"
+      }
+    ]
+  },
+  {
+    "name": "Aasen, Tom Christian (NOR)",
+    "start_group": "VL4",
+    "splits": [
+      {
+        "desc": "H\u00f6gsta punkten",
+        "time": "00:25:59",
+        "diff": "26:00",
+        "min_km": "08:40",
+        "kmh": "6.92",
+        "place": "2004"
+      },
+      {
+        "desc": "Sm\u00e5gan",
+        "time": "00:52:00",
+        "diff": "26:01",
+        "min_km": "03:16",
+        "kmh": "18.45",
+        "place": "2138"
+      },
+      {
+        "desc": "M\u00e5ngsbodarna",
+        "time": "01:38:59",
+        "diff": "46:59",
+        "min_km": "03:37",
+        "kmh": "16.60",
+        "place": "2272"
+      },
+      {
+        "desc": "Risberg",
+        "time": "02:17:55",
+        "diff": "38:56",
+        "min_km": "03:33",
+        "kmh": "16.95",
+        "place": "2276"
+      },
+      {
+        "desc": "Evertsberg",
+        "time": "03:09:42",
+        "diff": "51:47",
+        "min_km": "04:19",
+        "kmh": "13.90",
+        "place": "2218"
+      },
+      {
+        "desc": "Oxberg",
+        "time": "04:00:51",
+        "diff": "51:09",
+        "min_km": "03:25",
+        "kmh": "17.60",
+        "place": "2171"
+      },
+      {
+        "desc": "H\u00f6kberg",
+        "time": "04:38:10",
+        "diff": "37:19",
+        "min_km": "04:09",
+        "kmh": "14.47",
+        "place": "2155"
+      },
+      {
+        "desc": "Eldris",
+        "time": "05:18:59",
+        "diff": "40:49",
+        "min_km": "04:05",
+        "kmh": "14.70",
+        "place": "2181"
+      },
+      {
+        "desc": "Mora F\u00f6rvarning",
+        "time": "05:51:34",
+        "diff": "32:35",
+        "min_km": "03:53",
+        "kmh": "15.47",
+        "place": null
+      },
+      {
+        "desc": "Time Total (Brutto)",
+        "time": "05:53:32",
+        "diff": "01:58",
+        "min_km": "03:17",
+        "kmh": "18.31",
+        "place": "2227"
+      }
+    ]
+  },
+  {
+    "name": "Aase, Eirik (NOR)",
+    "start_group": "VL6",
+    "splits": [
+      {
+        "desc": "H\u00f6gsta punkten",
+        "time": null,
+        "diff": null,
+        "min_km": null,
+        "kmh": null,
+        "place": null
+      },
+      {
+        "desc": "Sm\u00e5gan",
+        "time": null,
+        "diff": null,
+        "min_km": null,
+        "kmh": null,
+        "place": null
+      },
+      {
+        "desc": "M\u00e5ngsbodarna",
+        "time": null,
+        "diff": null,
+        "min_km": null,
+        "kmh": null,
+        "place": null
+      },
+      {
+        "desc": "Risberg",
+        "time": null,
+        "diff": null,
+        "min_km": null,
+        "kmh": null,
+        "place": null
+      },
+      {
+        "desc": "Evertsberg",
+        "time": null,
+        "diff": null,
+        "min_km": null,
+        "kmh": null,
+        "place": null
+      },
+      {
+        "desc": "Oxberg",
+        "time": null,
+        "diff": null,
+        "min_km": null,
+        "kmh": null,
+        "place": null
+      },
+      {
+        "desc": "H\u00f6kberg",
+        "time": null,
+        "diff": null,
+        "min_km": null,
+        "kmh": null,
+        "place": null
+      },
+      {
+        "desc": "Eldris",
+        "time": null,
+        "diff": null,
+        "min_km": null,
+        "kmh": null,
+        "place": null
+      },
+      {
+        "desc": "Mora F\u00f6rvarning",
+        "time": null,
+        "diff": null,
+        "min_km": null,
+        "kmh": null,
+        "place": null
+      },
+      {
+        "desc": "Time Total (Brutto)",
+        "time": null,
+        "diff": null,
+        "min_km": null,
+        "kmh": null,
+        "place": null
+      }
+    ]
+  },
+  {
+    "name": "Aasberg, Olav (NOR)",
+    "start_group": "VL10",
+    "splits": [
+      {
+        "desc": "H\u00f6gsta punkten",
+        "time": "01:20:10",
+        "diff": "01:20:11",
+        "min_km": "26:44",
+        "kmh": "2.24",
+        "place": "9421"
+      },
+      {
+        "desc": "Sm\u00e5gan",
+        "time": "01:57:09",
+        "diff": "36:59",
+        "min_km": "04:38",
+        "kmh": "12.98",
+        "place": "9063"
+      },
+      {
+        "desc": "M\u00e5ngsbodarna",
+        "time": "03:06:55",
+        "diff": "01:09:46",
+        "min_km": "05:22",
+        "kmh": "11.18",
+        "place": "8827"
+      },
+      {
+        "desc": "Risberg",
+        "time": "04:13:19",
+        "diff": "01:06:24",
+        "min_km": "06:03",
+        "kmh": "9.94",
+        "place": "8800"
+      },
+      {
+        "desc": "Evertsberg",
+        "time": "05:48:01",
+        "diff": "01:34:42",
+        "min_km": "07:54",
+        "kmh": "7.60",
+        "place": "8946"
+      },
+      {
+        "desc": "Oxberg",
+        "time": "07:09:34",
+        "diff": "01:21:33",
+        "min_km": "05:27",
+        "kmh": "11.04",
+        "place": "8576"
+      },
+      {
+        "desc": "H\u00f6kberg",
+        "time": "08:14:45",
+        "diff": "01:05:11",
+        "min_km": "07:15",
+        "kmh": "8.28",
+        "place": "8582"
+      },
+      {
+        "desc": "Eldris",
+        "time": "09:18:23",
+        "diff": "01:03:38",
+        "min_km": "06:22",
+        "kmh": "9.43",
+        "place": "8554"
+      },
+      {
+        "desc": "Mora F\u00f6rvarning",
+        "time": "10:03:56",
+        "diff": "45:33",
+        "min_km": "05:26",
+        "kmh": "11.06",
+        "place": null
+      },
+      {
+        "desc": "Time Total (Brutto)",
+        "time": "10:06:33",
+        "diff": "02:37",
+        "min_km": "04:22",
+        "kmh": "13.76",
+        "place": "8474"
+      }
+    ]
+  },
+  {
+    "name": "Aasa, Annika (SWE)",
+    "start_group": "VL7",
+    "splits": [
+      {
+        "desc": "H\u00f6gsta punkten",
+        "time": "00:43:16",
+        "diff": "43:17",
+        "min_km": "14:26",
+        "kmh": "4.16",
+        "place": "437"
+      },
+      {
+        "desc": "Sm\u00e5gan",
+        "time": "01:17:47",
+        "diff": "34:31",
+        "min_km": "04:19",
+        "kmh": "13.91",
+        "place": "497"
+      },
+      {
+        "desc": "M\u00e5ngsbodarna",
+        "time": "02:24:02",
+        "diff": "01:06:15",
+        "min_km": "05:06",
+        "kmh": "11.77",
+        "place": "641"
+      },
+      {
+        "desc": "Risberg",
+        "time": "03:23:41",
+        "diff": "59:39",
+        "min_km": "05:26",
+        "kmh": "11.06",
+        "place": "739"
+      },
+      {
+        "desc": "Evertsberg",
+        "time": "04:39:30",
+        "diff": "01:15:49",
+        "min_km": "06:20",
+        "kmh": "9.50",
+        "place": "756"
+      },
+      {
+        "desc": "Oxberg",
+        "time": "05:54:52",
+        "diff": "01:15:22",
+        "min_km": "05:02",
+        "kmh": "11.94",
+        "place": "742"
+      },
+      {
+        "desc": "H\u00f6kberg",
+        "time": "06:47:43",
+        "diff": "52:51",
+        "min_km": "05:53",
+        "kmh": "10.22",
+        "place": "728"
+      },
+      {
+        "desc": "Eldris",
+        "time": "07:41:39",
+        "diff": "53:56",
+        "min_km": "05:24",
+        "kmh": "11.12",
+        "place": "725"
+      },
+      {
+        "desc": "Mora F\u00f6rvarning",
+        "time": "08:23:34",
+        "diff": "41:55",
+        "min_km": "05:00",
+        "kmh": "12.02",
+        "place": null
+      },
+      {
+        "desc": "Time Total (Brutto)",
+        "time": "08:26:06",
+        "diff": "02:32",
+        "min_km": "04:14",
+        "kmh": "14.21",
+        "place": "721"
+      }
+    ]
+  },
+  {
+    "name": "Aas, Eskild (NOR)",
+    "start_group": "VL2",
+    "splits": [
+      {
+        "desc": "H\u00f6gsta punkten",
+        "time": "00:18:46",
+        "diff": "18:47",
+        "min_km": "06:16",
+        "kmh": "9.58",
+        "place": "786"
+      },
+      {
+        "desc": "Sm\u00e5gan",
+        "time": "00:41:20",
+        "diff": "22:34",
+        "min_km": "02:50",
+        "kmh": "21.27",
+        "place": "840"
+      },
+      {
+        "desc": "M\u00e5ngsbodarna",
+        "time": "01:20:07",
+        "diff": "38:47",
+        "min_km": "02:59",
+        "kmh": "20.11",
+        "place": "878"
+      },
+      {
+        "desc": "Risberg",
+        "time": "01:52:20",
+        "diff": "32:13",
+        "min_km": "02:56",
+        "kmh": "20.49",
+        "place": "859"
+      },
+      {
+        "desc": "Evertsberg",
+        "time": "02:36:27",
+        "diff": "44:07",
+        "min_km": "03:41",
+        "kmh": "16.32",
+        "place": "825"
+      },
+      {
+        "desc": "Oxberg",
+        "time": "03:19:21",
+        "diff": "42:54",
+        "min_km": "02:52",
+        "kmh": "20.98",
+        "place": "788"
+      },
+      {
+        "desc": "H\u00f6kberg",
+        "time": "03:49:46",
+        "diff": "30:25",
+        "min_km": "03:23",
+        "kmh": "17.75",
+        "place": "763"
+      },
+      {
+        "desc": "Eldris",
+        "time": "04:22:33",
+        "diff": "32:47",
+        "min_km": "03:17",
+        "kmh": "18.30",
+        "place": "747"
+      },
+      {
+        "desc": "Mora F\u00f6rvarning",
+        "time": "04:48:42",
+        "diff": "26:09",
+        "min_km": "03:07",
+        "kmh": "19.27",
+        "place": null
+      },
+      {
+        "desc": "Time Total (Brutto)",
+        "time": "04:50:22",
+        "diff": "01:40",
+        "min_km": "02:47",
+        "kmh": "21.60",
+        "place": "737"
+      }
+    ]
+  },
+  {
+    "name": "Aas, Dag Frode (NOR)",
+    "start_group": "VL9",
+    "splits": [
+      {
+        "desc": "H\u00f6gsta punkten",
+        "time": "01:11:34",
+        "diff": "01:11:35",
+        "min_km": "23:52",
+        "kmh": "2.51",
+        "place": "8708"
+      },
+      {
+        "desc": "Sm\u00e5gan",
+        "time": "01:52:07",
+        "diff": "40:33",
+        "min_km": "05:05",
+        "kmh": "11.84",
+        "place": "8710"
+      },
+      {
+        "desc": "M\u00e5ngsbodarna",
+        "time": "03:05:54",
+        "diff": "01:13:47",
+        "min_km": "05:41",
+        "kmh": "10.57",
+        "place": "8787"
+      },
+      {
+        "desc": "Risberg",
+        "time": "04:08:38",
+        "diff": "01:02:44",
+        "min_km": "05:43",
+        "kmh": "10.52",
+        "place": "8634"
+      },
+      {
+        "desc": "Evertsberg",
+        "time": "05:29:45",
+        "diff": "01:21:07",
+        "min_km": "06:46",
+        "kmh": "8.88",
+        "place": "8414"
+      },
+      {
+        "desc": "Oxberg",
+        "time": "06:46:40",
+        "diff": "01:16:55",
+        "min_km": "05:08",
+        "kmh": "11.70",
+        "place": "8035"
+      },
+      {
+        "desc": "H\u00f6kberg",
+        "time": "07:41:57",
+        "diff": "55:17",
+        "min_km": "06:09",
+        "kmh": "9.77",
+        "place": "7850"
+      },
+      {
+        "desc": "Eldris",
+        "time": "08:36:30",
+        "diff": "54:33",
+        "min_km": "05:28",
+        "kmh": "11.00",
+        "place": "7692"
+      },
+      {
+        "desc": "Mora F\u00f6rvarning",
+        "time": "09:19:46",
+        "diff": "43:16",
+        "min_km": "05:10",
+        "kmh": "11.65",
+        "place": null
+      },
+      {
+        "desc": "Time Total (Brutto)",
+        "time": "09:22:31",
+        "diff": "02:45",
+        "min_km": "04:36",
+        "kmh": "13.09",
+        "place": "7635"
+      }
+    ]
+  },
+  {
+    "name": "Aar\u00f6, Oddmund (NOR)",
+    "start_group": "VL10",
+    "splits": [
+      {
+        "desc": "H\u00f6gsta punkten",
+        "time": null,
+        "diff": null,
+        "min_km": null,
+        "kmh": null,
+        "place": null
+      },
+      {
+        "desc": "Sm\u00e5gan",
+        "time": null,
+        "diff": null,
+        "min_km": null,
+        "kmh": null,
+        "place": null
+      },
+      {
+        "desc": "M\u00e5ngsbodarna",
+        "time": null,
+        "diff": null,
+        "min_km": null,
+        "kmh": null,
+        "place": null
+      },
+      {
+        "desc": "Risberg",
+        "time": null,
+        "diff": null,
+        "min_km": null,
+        "kmh": null,
+        "place": null
+      },
+      {
+        "desc": "Evertsberg",
+        "time": null,
+        "diff": null,
+        "min_km": null,
+        "kmh": null,
+        "place": null
+      },
+      {
+        "desc": "Oxberg",
+        "time": null,
+        "diff": null,
+        "min_km": null,
+        "kmh": null,
+        "place": null
+      },
+      {
+        "desc": "H\u00f6kberg",
+        "time": null,
+        "diff": null,
+        "min_km": null,
+        "kmh": null,
+        "place": null
+      },
+      {
+        "desc": "Eldris",
+        "time": null,
+        "diff": null,
+        "min_km": null,
+        "kmh": null,
+        "place": null
+      },
+      {
+        "desc": "Mora F\u00f6rvarning",
+        "time": null,
+        "diff": null,
+        "min_km": null,
+        "kmh": null,
+        "place": null
+      },
+      {
+        "desc": "Time Total (Brutto)",
+        "time": null,
+        "diff": null,
+        "min_km": null,
+        "kmh": null,
+        "place": null
+      }
+    ]
+  },
+  {
+    "name": "Aarnes, \u00d8yvind (NOR)",
+    "start_group": "VL4",
+    "splits": [
+      {
+        "desc": "H\u00f6gsta punkten",
+        "time": "00:32:39",
+        "diff": "32:40",
+        "min_km": "10:54",
+        "kmh": "5.51",
+        "place": "3154"
+      },
+      {
+        "desc": "Sm\u00e5gan",
+        "time": "00:59:00",
+        "diff": "26:21",
+        "min_km": "03:18",
+        "kmh": "18.22",
+        "place": "3062"
+      },
+      {
+        "desc": "M\u00e5ngsbodarna",
+        "time": "01:45:59",
+        "diff": "46:59",
+        "min_km": "03:37",
+        "kmh": "16.60",
+        "place": "2902"
+      },
+      {
+        "desc": "Risberg",
+        "time": "02:25:50",
+        "diff": "39:51",
+        "min_km": "03:38",
+        "kmh": "16.56",
+        "place": "2860"
+      },
+      {
+        "desc": "Evertsberg",
+        "time": "03:17:57",
+        "diff": "52:07",
+        "min_km": "04:21",
+        "kmh": "13.82",
+        "place": "2675"
+      },
+      {
+        "desc": "Oxberg",
+        "time": "04:10:31",
+        "diff": "52:34",
+        "min_km": "03:31",
+        "kmh": "17.12",
+        "place": "2555"
+      },
+      {
+        "desc": "H\u00f6kberg",
+        "time": "04:48:38",
+        "diff": "38:07",
+        "min_km": "04:15",
+        "kmh": "14.17",
+        "place": "2507"
+      },
+      {
+        "desc": "Eldris",
+        "time": "05:30:08",
+        "diff": "41:30",
+        "min_km": "04:09",
+        "kmh": "14.46",
+        "place": "2518"
+      },
+      {
+        "desc": "Mora F\u00f6rvarning",
+        "time": "06:02:30",
+        "diff": "32:22",
+        "min_km": "03:52",
+        "kmh": "15.57",
+        "place": null
+      },
+      {
+        "desc": "Time Total (Brutto)",
+        "time": "06:04:29",
+        "diff": "01:59",
+        "min_km": "03:19",
+        "kmh": "18.15",
+        "place": "2526"
+      }
+    ]
+  },
+  {
+    "name": "Aarmo, Roger (NOR)",
+    "start_group": "VL6",
+    "splits": [
+      {
+        "desc": "H\u00f6gsta punkten",
+        "time": "00:36:48",
+        "diff": "36:49",
+        "min_km": "12:17",
+        "kmh": "4.89",
+        "place": "3922"
+      },
+      {
+        "desc": "Sm\u00e5gan",
+        "time": "01:07:48",
+        "diff": "31:00",
+        "min_km": "03:53",
+        "kmh": "15.48",
+        "place": "4216"
+      },
+      {
+        "desc": "M\u00e5ngsbodarna",
+        "time": "02:03:34",
+        "diff": "55:46",
+        "min_km": "04:18",
+        "kmh": "13.99",
+        "place": "4550"
+      },
+      {
+        "desc": "Risberg",
+        "time": "02:55:59",
+        "diff": "52:25",
+        "min_km": "04:46",
+        "kmh": "12.59",
+        "place": "5009"
+      },
+      {
+        "desc": "Evertsberg",
+        "time": "03:55:44",
+        "diff": "59:45",
+        "min_km": "04:59",
+        "kmh": "12.05",
+        "place": "4695"
+      },
+      {
+        "desc": "Oxberg",
+        "time": "04:59:39",
+        "diff": "01:03:55",
+        "min_km": "04:16",
+        "kmh": "14.08",
+        "place": "4593"
+      },
+      {
+        "desc": "H\u00f6kberg",
+        "time": "05:44:13",
+        "diff": "44:34",
+        "min_km": "04:58",
+        "kmh": "12.12",
+        "place": "4483"
+      },
+      {
+        "desc": "Eldris",
+        "time": "06:29:58",
+        "diff": "45:45",
+        "min_km": "04:35",
+        "kmh": "13.11",
+        "place": "4397"
+      },
+      {
+        "desc": "Mora F\u00f6rvarning",
+        "time": "07:05:59",
+        "diff": "36:01",
+        "min_km": "04:18",
+        "kmh": "13.99",
+        "place": null
+      },
+      {
+        "desc": "Time Total (Brutto)",
+        "time": "07:08:07",
+        "diff": "02:08",
+        "min_km": "03:34",
+        "kmh": "16.88",
+        "place": "4363"
+      }
+    ]
+  },
+  {
+    "name": "Aandstad, Henrik (NOR)",
+    "start_group": "VL3",
+    "splits": [
+      {
+        "desc": "H\u00f6gsta punkten",
+        "time": "00:27:07",
+        "diff": "27:08",
+        "min_km": "09:03",
+        "kmh": "6.63",
+        "place": "2205"
+      },
+      {
+        "desc": "Sm\u00e5gan",
+        "time": "00:49:18",
+        "diff": "22:11",
+        "min_km": "02:47",
+        "kmh": "21.64",
+        "place": "1787"
+      },
+      {
+        "desc": "M\u00e5ngsbodarna",
+        "time": "01:27:03",
+        "diff": "37:45",
+        "min_km": "02:55",
+        "kmh": "20.66",
+        "place": "1339"
+      },
+      {
+        "desc": "Risberg",
+        "time": "01:58:49",
+        "diff": "31:46",
+        "min_km": "02:54",
+        "kmh": "20.78",
+        "place": "1173"
+      },
+      {
+        "desc": "Evertsberg",
+        "time": "02:42:57",
+        "diff": "44:08",
+        "min_km": "03:41",
+        "kmh": "16.31",
+        "place": "1071"
+      },
+      {
+        "desc": "Oxberg",
+        "time": "03:28:03",
+        "diff": "45:06",
+        "min_km": "03:01",
+        "kmh": "19.96",
+        "place": "1047"
+      },
+      {
+        "desc": "H\u00f6kberg",
+        "time": "04:01:55",
+        "diff": "33:52",
+        "min_km": "03:46",
+        "kmh": "15.94",
+        "place": "1083"
+      },
+      {
+        "desc": "Eldris",
+        "time": "04:36:39",
+        "diff": "34:44",
+        "min_km": "03:29",
+        "kmh": "17.27",
+        "place": "1083"
+      },
+      {
+        "desc": "Mora F\u00f6rvarning",
+        "time": "05:02:45",
+        "diff": "26:06",
+        "min_km": "03:07",
+        "kmh": "19.31",
+        "place": null
+      },
+      {
+        "desc": "Time Total (Brutto)",
+        "time": "05:04:20",
+        "diff": "01:35",
+        "min_km": "02:39",
+        "kmh": "22.74",
+        "place": "1042"
+      }
+    ]
+  },
+  {
+    "name": "Aandewiel, Kees (NED)",
+    "start_group": "VL10",
+    "splits": [
+      {
+        "desc": "H\u00f6gsta punkten",
+        "time": null,
+        "diff": null,
+        "min_km": null,
+        "kmh": null,
+        "place": null
+      },
+      {
+        "desc": "Sm\u00e5gan",
+        "time": null,
+        "diff": null,
+        "min_km": null,
+        "kmh": null,
+        "place": null
+      },
+      {
+        "desc": "M\u00e5ngsbodarna",
+        "time": null,
+        "diff": null,
+        "min_km": null,
+        "kmh": null,
+        "place": null
+      },
+      {
+        "desc": "Risberg",
+        "time": null,
+        "diff": null,
+        "min_km": null,
+        "kmh": null,
+        "place": null
+      },
+      {
+        "desc": "Evertsberg",
+        "time": null,
+        "diff": null,
+        "min_km": null,
+        "kmh": null,
+        "place": null
+      },
+      {
+        "desc": "Oxberg",
+        "time": null,
+        "diff": null,
+        "min_km": null,
+        "kmh": null,
+        "place": null
+      },
+      {
+        "desc": "H\u00f6kberg",
+        "time": null,
+        "diff": null,
+        "min_km": null,
+        "kmh": null,
+        "place": null
+      },
+      {
+        "desc": "Eldris",
+        "time": null,
+        "diff": null,
+        "min_km": null,
+        "kmh": null,
+        "place": null
+      },
+      {
+        "desc": "Mora F\u00f6rvarning",
+        "time": null,
+        "diff": null,
+        "min_km": null,
+        "kmh": null,
+        "place": null
+      },
+      {
+        "desc": "Time Total (Brutto)",
+        "time": null,
+        "diff": null,
+        "min_km": null,
+        "kmh": null,
+        "place": null
+      }
+    ]
+  },
+  {
+    "name": "Aamlid, Per Christian (NOR)",
+    "start_group": "VL5",
+    "splits": [
+      {
+        "desc": "H\u00f6gsta punkten",
+        "time": "00:44:17",
+        "diff": "44:18",
+        "min_km": "14:46",
+        "kmh": "4.06",
+        "place": "5273"
+      },
+      {
+        "desc": "Sm\u00e5gan",
+        "time": "01:12:43",
+        "diff": "28:26",
+        "min_km": "03:34",
+        "kmh": "16.88",
+        "place": "4929"
+      },
+      {
+        "desc": "M\u00e5ngsbodarna",
+        "time": "02:03:19",
+        "diff": "50:36",
+        "min_km": "03:54",
+        "kmh": "15.41",
+        "place": "4532"
+      },
+      {
+        "desc": "Risberg",
+        "time": "02:47:24",
+        "diff": "44:05",
+        "min_km": "04:01",
+        "kmh": "14.97",
+        "place": "4357"
+      },
+      {
+        "desc": "Evertsberg",
+        "time": "03:46:02",
+        "diff": "58:38",
+        "min_km": "04:54",
+        "kmh": "12.28",
+        "place": "4173"
+      },
+      {
+        "desc": "Oxberg",
+        "time": "04:45:57",
+        "diff": "59:55",
+        "min_km": "04:00",
+        "kmh": "15.02",
+        "place": "4037"
+      },
+      {
+        "desc": "H\u00f6kberg",
+        "time": "05:29:23",
+        "diff": "43:26",
+        "min_km": "04:50",
+        "kmh": "12.43",
+        "place": "3959"
+      },
+      {
+        "desc": "Eldris",
+        "time": "06:14:29",
+        "diff": "45:06",
+        "min_km": "04:31",
+        "kmh": "13.30",
+        "place": "3909"
+      },
+      {
+        "desc": "Mora F\u00f6rvarning",
+        "time": "06:51:24",
+        "diff": "36:55",
+        "min_km": "04:24",
+        "kmh": "13.65",
+        "place": null
+      },
+      {
+        "desc": "Time Total (Brutto)",
+        "time": "06:53:45",
+        "diff": "02:21",
+        "min_km": "03:56",
+        "kmh": "15.32",
+        "place": "3954"
+      }
+    ]
+  },
+  {
+    "name": "Aamelfot, Torill Hasle (NOR)",
+    "start_group": "VL8",
+    "splits": [
+      {
+        "desc": "H\u00f6gsta punkten",
+        "time": "01:00:12",
+        "diff": "01:00:13",
+        "min_km": "20:05",
+        "kmh": "2.99",
+        "place": "1065"
+      },
+      {
+        "desc": "Sm\u00e5gan",
+        "time": "01:36:47",
+        "diff": "36:35",
+        "min_km": "04:35",
+        "kmh": "13.12",
+        "place": "1037"
+      },
+      {
+        "desc": "M\u00e5ngsbodarna",
+        "time": "02:42:55",
+        "diff": "01:06:08",
+        "min_km": "05:06",
+        "kmh": "11.79",
+        "place": "989"
+      },
+      {
+        "desc": "Risberg",
+        "time": "03:39:43",
+        "diff": "56:48",
+        "min_km": "05:10",
+        "kmh": "11.62",
+        "place": "953"
+      },
+      {
+        "desc": "Evertsberg",
+        "time": "04:56:58",
+        "diff": "01:17:15",
+        "min_km": "06:27",
+        "kmh": "9.32",
+        "place": "926"
+      },
+      {
+        "desc": "Oxberg",
+        "time": "06:13:51",
+        "diff": "01:16:53",
+        "min_km": "05:08",
+        "kmh": "11.71",
+        "place": "884"
+      },
+      {
+        "desc": "H\u00f6kberg",
+        "time": "07:10:18",
+        "diff": "56:27",
+        "min_km": "06:17",
+        "kmh": "9.57",
+        "place": "884"
+      },
+      {
+        "desc": "Eldris",
+        "time": "08:08:05",
+        "diff": "57:47",
+        "min_km": "05:47",
+        "kmh": "10.38",
+        "place": "886"
+      },
+      {
+        "desc": "Mora F\u00f6rvarning",
+        "time": "08:52:47",
+        "diff": "44:42",
+        "min_km": "05:20",
+        "kmh": "11.28",
+        "place": null
+      },
+      {
+        "desc": "Time Total (Brutto)",
+        "time": "08:55:38",
+        "diff": "02:51",
+        "min_km": "04:46",
+        "kmh": "12.63",
+        "place": "898"
+      }
+    ]
+  },
+  {
+    "name": "Aamelfot, Dag (NOR)",
+    "start_group": "VL10",
+    "splits": [
+      {
+        "desc": "H\u00f6gsta punkten",
+        "time": "01:31:29",
+        "diff": "01:31:30",
+        "min_km": "30:30",
+        "kmh": "1.97",
+        "place": "10516"
+      },
+      {
+        "desc": "Sm\u00e5gan",
+        "time": "02:11:29",
+        "diff": "40:00",
+        "min_km": "05:00",
+        "kmh": "12.00",
+        "place": "10089"
+      },
+      {
+        "desc": "M\u00e5ngsbodarna",
+        "time": "03:18:28",
+        "diff": "01:06:59",
+        "min_km": "05:10",
+        "kmh": "11.64",
+        "place": "9374"
+      },
+      {
+        "desc": "Risberg",
+        "time": "04:14:57",
+        "diff": "56:29",
+        "min_km": "05:09",
+        "kmh": "11.68",
+        "place": "8875"
+      },
+      {
+        "desc": "Evertsberg",
+        "time": "05:30:07",
+        "diff": "01:15:10",
+        "min_km": "06:16",
+        "kmh": "9.58",
+        "place": "8429"
+      },
+      {
+        "desc": "Oxberg",
+        "time": "06:44:13",
+        "diff": "01:14:06",
+        "min_km": "04:57",
+        "kmh": "12.15",
+        "place": "7965"
+      },
+      {
+        "desc": "H\u00f6kberg",
+        "time": "07:37:55",
+        "diff": "53:42",
+        "min_km": "05:58",
+        "kmh": "10.06",
+        "place": "7755"
+      },
+      {
+        "desc": "Eldris",
+        "time": "08:34:53",
+        "diff": "56:58",
+        "min_km": "05:42",
+        "kmh": "10.53",
+        "place": "7658"
+      },
+      {
+        "desc": "Mora F\u00f6rvarning",
+        "time": "09:17:26",
+        "diff": "42:33",
+        "min_km": "05:04",
+        "kmh": "11.84",
+        "place": null
+      },
+      {
+        "desc": "Time Total (Brutto)",
+        "time": "09:20:15",
+        "diff": "02:49",
+        "min_km": "04:42",
+        "kmh": "12.78",
+        "place": "7570"
+      }
+    ]
+  },
+  {
+    "name": "Aalto, Tomi (FIN)",
+    "start_group": "VL7",
+    "splits": [
+      {
+        "desc": "H\u00f6gsta punkten",
+        "time": "00:49:10",
+        "diff": "49:11",
+        "min_km": "16:24",
+        "kmh": "3.66",
+        "place": "6131"
+      },
+      {
+        "desc": "Sm\u00e5gan",
+        "time": "01:23:43",
+        "diff": "34:33",
+        "min_km": "04:20",
+        "kmh": "13.89",
+        "place": "6293"
+      },
+      {
+        "desc": "M\u00e5ngsbodarna",
+        "time": "02:25:26",
+        "diff": "01:01:43",
+        "min_km": "04:45",
+        "kmh": "12.64",
+        "place": "6435"
+      },
+      {
+        "desc": "Risberg",
+        "time": "03:22:12",
+        "diff": "56:46",
+        "min_km": "05:10",
+        "kmh": "11.63",
+        "place": "6593"
+      },
+      {
+        "desc": "Evertsberg",
+        "time": "04:34:27",
+        "diff": "01:12:15",
+        "min_km": "06:02",
+        "kmh": "9.97",
+        "place": "6486"
+      },
+      {
+        "desc": "Oxberg",
+        "time": "05:47:23",
+        "diff": "01:12:56",
+        "min_km": "04:52",
+        "kmh": "12.34",
+        "place": "6325"
+      },
+      {
+        "desc": "H\u00f6kberg",
+        "time": "06:39:24",
+        "diff": "52:01",
+        "min_km": "05:47",
+        "kmh": "10.38",
+        "place": "6253"
+      },
+      {
+        "desc": "Eldris",
+        "time": "07:37:13",
+        "diff": "57:49",
+        "min_km": "05:47",
+        "kmh": "10.38",
+        "place": "6308"
+      },
+      {
+        "desc": "Mora F\u00f6rvarning",
+        "time": "08:19:51",
+        "diff": "42:38",
+        "min_km": "05:05",
+        "kmh": "11.82",
+        "place": null
+      },
+      {
+        "desc": "Time Total (Brutto)",
+        "time": "08:22:19",
+        "diff": "02:28",
+        "min_km": "04:07",
+        "kmh": "14.59",
+        "place": "6287"
+      }
+    ]
+  },
+  {
+    "name": "Aalberg, Daniel (NOR)",
+    "start_group": "VL8",
+    "splits": [
+      {
+        "desc": "H\u00f6gsta punkten",
+        "time": "01:02:35",
+        "diff": "01:02:36",
+        "min_km": "20:52",
+        "kmh": "2.88",
+        "place": "7789"
+      },
+      {
+        "desc": "Sm\u00e5gan",
+        "time": "01:43:30",
+        "diff": "40:55",
+        "min_km": "05:07",
+        "kmh": "11.73",
+        "place": "8066"
+      },
+      {
+        "desc": "M\u00e5ngsbodarna",
+        "time": "02:55:27",
+        "diff": "01:11:57",
+        "min_km": "05:33",
+        "kmh": "10.84",
+        "place": "8277"
+      },
+      {
+        "desc": "Risberg",
+        "time": "03:59:23",
+        "diff": "01:03:56",
+        "min_km": "05:49",
+        "kmh": "10.32",
+        "place": "8256"
+      },
+      {
+        "desc": "Evertsberg",
+        "time": "05:22:40",
+        "diff": "01:23:17",
+        "min_km": "06:57",
+        "kmh": "8.65",
+        "place": "8190"
+      },
+      {
+        "desc": "Oxberg",
+        "time": "06:43:02",
+        "diff": "01:20:22",
+        "min_km": "05:22",
+        "kmh": "11.20",
+        "place": "7932"
+      },
+      {
+        "desc": "H\u00f6kberg",
+        "time": "07:40:06",
+        "diff": "57:04",
+        "min_km": "06:21",
+        "kmh": "9.46",
+        "place": "7808"
+      },
+      {
+        "desc": "Eldris",
+        "time": "08:39:48",
+        "diff": "59:42",
+        "min_km": "05:59",
+        "kmh": "10.05",
+        "place": "7779"
+      },
+      {
+        "desc": "Mora F\u00f6rvarning",
+        "time": "09:22:34",
+        "diff": "42:46",
+        "min_km": "05:06",
+        "kmh": "11.78",
+        "place": null
+      },
+      {
+        "desc": "Time Total (Brutto)",
+        "time": "09:25:00",
+        "diff": "02:26",
+        "min_km": "04:04",
+        "kmh": "14.79",
+        "place": "7689"
+      }
+    ]
+  },
+  {
+    "name": "Aagaard, Thomas (DEN)",
+    "start_group": "VL5",
+    "splits": [
+      {
+        "desc": "H\u00f6gsta punkten",
+        "time": "00:30:57",
+        "diff": "30:58",
+        "min_km": "10:20",
+        "kmh": "5.81",
+        "place": "2886"
+      },
+      {
+        "desc": "Sm\u00e5gan",
+        "time": "00:58:02",
+        "diff": "27:05",
+        "min_km": "03:24",
+        "kmh": "17.72",
+        "place": "2942"
+      },
+      {
+        "desc": "M\u00e5ngsbodarna",
+        "time": "01:47:41",
+        "diff": "49:39",
+        "min_km": "03:50",
+        "kmh": "15.71",
+        "place": "3050"
+      },
+      {
+        "desc": "Risberg",
+        "time": "02:28:58",
+        "diff": "41:17",
+        "min_km": "03:46",
+        "kmh": "15.99",
+        "place": "3057"
+      },
+      {
+        "desc": "Evertsberg",
+        "time": "03:27:14",
+        "diff": "58:16",
+        "min_km": "04:52",
+        "kmh": "12.36",
+        "place": "3164"
+      },
+      {
+        "desc": "Oxberg",
+        "time": "04:24:16",
+        "diff": "57:02",
+        "min_km": "03:49",
+        "kmh": "15.78",
+        "place": "3134"
+      },
+      {
+        "desc": "H\u00f6kberg",
+        "time": "05:07:08",
+        "diff": "42:52",
+        "min_km": "04:46",
+        "kmh": "12.60",
+        "place": "3158"
+      },
+      {
+        "desc": "Eldris",
+        "time": "05:50:57",
+        "diff": "43:49",
+        "min_km": "04:23",
+        "kmh": "13.69",
+        "place": "3175"
+      },
+      {
+        "desc": "Mora F\u00f6rvarning",
+        "time": "06:25:50",
+        "diff": "34:53",
+        "min_km": "04:10",
+        "kmh": "14.45",
+        "place": null
+      },
+      {
+        "desc": "Time Total (Brutto)",
+        "time": "06:28:06",
+        "diff": "02:16",
+        "min_km": "03:47",
+        "kmh": "15.88",
+        "place": "3207"
+      }
+    ]
+  },
+  {
+    "name": "Aagaard, Peter (DEN)",
+    "start_group": "VL7",
+    "splits": [
+      {
+        "desc": "H\u00f6gsta punkten",
+        "time": "00:42:37",
+        "diff": "42:38",
+        "min_km": "14:13",
+        "kmh": "4.22",
+        "place": "4956"
+      },
+      {
+        "desc": "Sm\u00e5gan",
+        "time": "01:14:02",
+        "diff": "31:25",
+        "min_km": "03:56",
+        "kmh": "15.28",
+        "place": "5085"
+      },
+      {
+        "desc": "M\u00e5ngsbodarna",
+        "time": "02:11:12",
+        "diff": "57:10",
+        "min_km": "04:24",
+        "kmh": "13.64",
+        "place": "5319"
+      },
+      {
+        "desc": "Risberg",
+        "time": "03:02:34",
+        "diff": "51:22",
+        "min_km": "04:41",
+        "kmh": "12.85",
+        "place": "5462"
+      },
+      {
+        "desc": "Evertsberg",
+        "time": "04:13:07",
+        "diff": "01:10:33",
+        "min_km": "05:53",
+        "kmh": "10.21",
+        "place": "5566"
+      },
+      {
+        "desc": "Oxberg",
+        "time": "05:25:30",
+        "diff": "01:12:23",
+        "min_km": "04:50",
+        "kmh": "12.43",
+        "place": "5581"
+      },
+      {
+        "desc": "H\u00f6kberg",
+        "time": "06:19:19",
+        "diff": "53:49",
+        "min_km": "05:59",
+        "kmh": "10.03",
+        "place": "5631"
+      },
+      {
+        "desc": "Eldris",
+        "time": "07:14:04",
+        "diff": "54:45",
+        "min_km": "05:29",
+        "kmh": "10.96",
+        "place": "5684"
+      },
+      {
+        "desc": "Mora F\u00f6rvarning",
+        "time": "07:56:35",
+        "diff": "42:31",
+        "min_km": "05:04",
+        "kmh": "11.85",
+        "place": null
+      },
+      {
+        "desc": "Time Total (Brutto)",
+        "time": "07:59:28",
+        "diff": "02:53",
+        "min_km": "04:49",
+        "kmh": "12.49",
+        "place": "5768"
+      }
+    ]
+  },
+  {
+    "name": "Aagaard, Morten (DEN)",
+    "start_group": "VL6",
+    "splits": [
+      {
+        "desc": "H\u00f6gsta punkten",
+        "time": null,
+        "diff": null,
+        "min_km": null,
+        "kmh": null,
+        "place": null
+      },
+      {
+        "desc": "Sm\u00e5gan",
+        "time": null,
+        "diff": null,
+        "min_km": null,
+        "kmh": null,
+        "place": null
+      },
+      {
+        "desc": "M\u00e5ngsbodarna",
+        "time": null,
+        "diff": null,
+        "min_km": null,
+        "kmh": null,
+        "place": null
+      },
+      {
+        "desc": "Risberg",
+        "time": null,
+        "diff": null,
+        "min_km": null,
+        "kmh": null,
+        "place": null
+      },
+      {
+        "desc": "Evertsberg",
+        "time": null,
+        "diff": null,
+        "min_km": null,
+        "kmh": null,
+        "place": null
+      },
+      {
+        "desc": "Oxberg",
+        "time": null,
+        "diff": null,
+        "min_km": null,
+        "kmh": null,
+        "place": null
+      },
+      {
+        "desc": "H\u00f6kberg",
+        "time": null,
+        "diff": null,
+        "min_km": null,
+        "kmh": null,
+        "place": null
+      },
+      {
+        "desc": "Eldris",
+        "time": null,
+        "diff": null,
+        "min_km": null,
+        "kmh": null,
+        "place": null
+      },
+      {
+        "desc": "Mora F\u00f6rvarning",
+        "time": null,
+        "diff": null,
+        "min_km": null,
+        "kmh": null,
+        "place": null
+      },
+      {
+        "desc": "Time Total (Brutto)",
+        "time": null,
+        "diff": null,
+        "min_km": null,
+        "kmh": null,
+        "place": null
+      }
+    ]
+  },
+  {
+    "name": "Aadusaar, Markus (SWE)",
+    "start_group": "VL10",
+    "splits": [
+      {
+        "desc": "H\u00f6gsta punkten",
+        "time": "01:30:40",
+        "diff": "01:30:41",
+        "min_km": "30:14",
+        "kmh": "1.98",
+        "place": "10433"
+      },
+      {
+        "desc": "Sm\u00e5gan",
+        "time": "02:04:41",
+        "diff": "34:01",
+        "min_km": "04:16",
+        "kmh": "14.11",
+        "place": "9584"
+      },
+      {
+        "desc": "M\u00e5ngsbodarna",
+        "time": "03:01:55",
+        "diff": "57:14",
+        "min_km": "04:25",
+        "kmh": "13.63",
+        "place": "8592"
+      },
+      {
+        "desc": "Risberg",
+        "time": "04:04:43",
+        "diff": "01:02:48",
+        "min_km": "05:43",
+        "kmh": "10.51",
+        "place": "8511"
+      },
+      {
+        "desc": "Evertsberg",
+        "time": "05:11:36",
+        "diff": "01:06:53",
+        "min_km": "05:35",
+        "kmh": "10.77",
+        "place": "7828"
+      },
+      {
+        "desc": "Oxberg",
+        "time": "06:28:55",
+        "diff": "01:17:19",
+        "min_km": "05:10",
+        "kmh": "11.64",
+        "place": "7574"
+      },
+      {
+        "desc": "H\u00f6kberg",
+        "time": "07:30:36",
+        "diff": "01:01:41",
+        "min_km": "06:52",
+        "kmh": "8.75",
+        "place": "7584"
+      },
+      {
+        "desc": "Eldris",
+        "time": "08:28:03",
+        "diff": "57:27",
+        "min_km": "05:45",
+        "kmh": "10.44",
+        "place": "7498"
+      },
+      {
+        "desc": "Mora F\u00f6rvarning",
+        "time": "09:16:52",
+        "diff": "48:49",
+        "min_km": "05:49",
+        "kmh": "10.32",
+        "place": null
+      },
+      {
+        "desc": "Time Total (Brutto)",
+        "time": "09:19:38",
+        "diff": "02:46",
+        "min_km": "04:37",
+        "kmh": "13.01",
+        "place": "7559"
+      }
+    ]
+  },
+  {
+    "name": "Aaby, Jacqueline (SWE)",
+    "start_group": "VL10",
+    "splits": [
+      {
+        "desc": "H\u00f6gsta punkten",
+        "time": "01:22:12",
+        "diff": "01:22:13",
+        "min_km": "27:25",
+        "kmh": "2.19",
+        "place": "1961"
+      },
+      {
+        "desc": "Sm\u00e5gan",
+        "time": "02:05:30",
+        "diff": "43:18",
+        "min_km": "05:25",
+        "kmh": "11.09",
+        "place": "1916"
+      },
+      {
+        "desc": "M\u00e5ngsbodarna",
+        "time": "03:29:59",
+        "diff": "01:24:29",
+        "min_km": "06:30",
+        "kmh": "9.23",
+        "place": "1923"
+      },
+      {
+        "desc": "Risberg",
+        "time": "04:52:29",
+        "diff": "01:22:30",
+        "min_km": "07:30",
+        "kmh": "8.00",
+        "place": "1941"
+      },
+      {
+        "desc": "Evertsberg",
+        "time": "06:27:23",
+        "diff": "01:34:54",
+        "min_km": "07:55",
+        "kmh": "7.59",
+        "place": "1890"
+      },
+      {
+        "desc": "Oxberg",
+        "time": "08:13:08",
+        "diff": "01:45:45",
+        "min_km": "07:03",
+        "kmh": "8.51",
+        "place": "1943"
+      },
+      {
+        "desc": "H\u00f6kberg",
+        "time": "09:23:19",
+        "diff": "01:10:11",
+        "min_km": "07:48",
+        "kmh": "7.69",
+        "place": "1947"
+      },
+      {
+        "desc": "Eldris",
+        "time": "10:39:58",
+        "diff": "01:16:39",
+        "min_km": "07:40",
+        "kmh": "7.83",
+        "place": "1978"
+      },
+      {
+        "desc": "Mora F\u00f6rvarning",
+        "time": "11:40:44",
+        "diff": "01:00:46",
+        "min_km": "07:15",
+        "kmh": "8.29",
+        "place": null
+      },
+      {
+        "desc": "Time Total (Brutto)",
+        "time": "11:44:04",
+        "diff": "03:20",
+        "min_km": "05:34",
+        "kmh": "10.80",
+        "place": "1931"
+      }
+    ]
+  },
+  {
+    "name": "A. J\u00f6nsson, Alexander (SWE)",
+    "start_group": "VL4",
+    "splits": [
+      {
+        "desc": "H\u00f6gsta punkten",
+        "time": "00:31:28",
+        "diff": "31:29",
+        "min_km": "10:30",
+        "kmh": "5.72",
+        "place": "2973"
+      },
+      {
+        "desc": "Sm\u00e5gan",
+        "time": "00:56:38",
+        "diff": "25:10",
+        "min_km": "03:09",
+        "kmh": "19.07",
+        "place": "2717"
+      },
+      {
+        "desc": "M\u00e5ngsbodarna",
+        "time": "01:39:37",
+        "diff": "42:59",
+        "min_km": "03:19",
+        "kmh": "18.15",
+        "place": "2324"
+      },
+      {
+        "desc": "Risberg",
+        "time": "02:16:11",
+        "diff": "36:34",
+        "min_km": "03:20",
+        "kmh": "18.05",
+        "place": "2168"
+      },
+      {
+        "desc": "Evertsberg",
+        "time": "03:06:13",
+        "diff": "50:02",
+        "min_km": "04:11",
+        "kmh": "14.39",
+        "place": "2069"
+      },
+      {
+        "desc": "Oxberg",
+        "time": "03:56:52",
+        "diff": "50:39",
+        "min_km": "03:23",
+        "kmh": "17.77",
+        "place": "2033"
+      },
+      {
+        "desc": "H\u00f6kberg",
+        "time": "04:33:51",
+        "diff": "36:59",
+        "min_km": "04:07",
+        "kmh": "14.60",
+        "place": "2018"
+      },
+      {
+        "desc": "Eldris",
+        "time": "05:13:18",
+        "diff": "39:27",
+        "min_km": "03:57",
+        "kmh": "15.21",
+        "place": "2028"
+      },
+      {
+        "desc": "Mora F\u00f6rvarning",
+        "time": "05:44:05",
+        "diff": "30:47",
+        "min_km": "03:40",
+        "kmh": "16.37",
+        "place": null
+      },
+      {
+        "desc": "Time Total (Brutto)",
+        "time": "05:46:07",
+        "diff": "02:02",
+        "min_km": "03:24",
+        "kmh": "17.70",
+        "place": "2040"
+      }
+    ]
+  }
+]
