@@ -9,7 +9,7 @@ class OverviewSpider(scrapy.Spider):
 
     def start_requests(self):
         urls = [
-            f'https://results.vasaloppet.se/2023/?page={i}&event=VL_HCH8NDMR2300&pid=search' for i in range(1,2)
+            f'https://results.vasaloppet.se/2023/?page={i}&event=VL_HCH8NDMR2300&pid=search' for i in range(1,609)
         ]
         self.logger.info(f'URLS: {urls}')
         for url in urls:
