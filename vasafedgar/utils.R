@@ -26,7 +26,7 @@ save_data <- function(db,table,data) {
 
 save_activity_prop <- function(db,id,activity_prop_athlete,activity_prop){
     activity_prop_athlete_old <- filter(activity_prop,athlete_id==id)
-    if(!isTRUE(all_equal(activity_prop_athlete_old,activity_prop_athlete))){
+    if(!isTRUE(all.equal(activity_prop_athlete_old,activity_prop_athlete))){
         if(nrow(activity_prop_athlete_old)==0){
             activity_prop <- bind_rows(activity_prop,activity_prop_athlete)
         }
@@ -56,8 +56,7 @@ load_data <- function(db,table) {
 }
 
 
-update_activities <- function(db,users){
-    date_origin <- as.Date('2022-05-01')
+update_activities <- function(db,users,date_origin){
     curr_activities <- load_data(db,'Activity')
     new_activities <- lapply(1:nrow(users),function(i){
                                 stoken <- httr::config(token = readRDS(paste0('auth/httr-oauth_',athletes_mapping[users$name[i]]))[[1]])
@@ -77,7 +76,7 @@ update_activities <- function(db,users){
     if(nrow(new_activities)!=0){
         dbAppendTable(db,'Activity',new_activities,overwrite=T)
     }
-    if(!isTRUE(all_equal(users,users_updated))){
+    if(!isTRUE(all.equal(users,users_updated))){
         dbWriteTable(db,'User',users_updated,overwrite=T)
     }
     all_activities <- bind_rows(curr_activities,new_activities) %>%
@@ -139,3 +138,4 @@ plot_summary_athlete <- function(activities_mapped,athlete_name){
     plot_summary_var(summary_dat,var='tot_time',title='Tímalengd æfinga') /
     plot_summary_var(summary_dat,var='tot_eff_distance',title='Umreiknuð vegalengd')
 }
+
