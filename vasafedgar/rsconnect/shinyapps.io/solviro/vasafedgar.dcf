@@ -5,10 +5,10 @@ account: solviro
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 6512056
-bundleId: 6022170
+bundleId: 6105921
 url: https://solviro.shinyapps.io/vasafedgar/
-when: 1655671509.92342
-lastSyncTime: 1655671509.92344
+when: 1658087362.98518
+lastSyncTime: 1658087362.98519
 asMultiple: FALSE
 asStatic: FALSE
 ignoredFiles: .httr-oauth
