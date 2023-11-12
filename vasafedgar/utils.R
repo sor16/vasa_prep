@@ -88,13 +88,14 @@ update_activities <- function(db,users,date_origin){
 activity_list_to_table <- function(activity_list,athlete_id){
     lapply(1:length(activity_list), function(i){
         tibble('date'=gsub('T',' ',gsub('Z$','',activity_list[[i]]$start_date)),
-                          'name'=activity_list[[i]]$name,
-                          'athlete_id'=athlete_id,
-                          'type'=activity_list[[i]]$type,
-                          'time'=activity_list[[i]]$moving_time,
-                          'distance'=activity_list[[i]]$distance,
-                          'avg_heartrate'=if(activity_list[[i]]$has_heartrate) activity_list[[i]]$average_heartrate else as.numeric(NA),
-                          'description'='')
+              'name'=activity_list[[i]]$name,
+              'athlete_id'=athlete_id,
+              'type'=activity_list[[i]]$type,
+              'time'=activity_list[[i]]$moving_time,
+              'distance'=activity_list[[i]]$distance,
+              'avg_heartrate'=if(activity_list[[i]]$has_heartrate) activity_list[[i]]$average_heartrate else as.numeric(NA),
+              'avg_watts'=activity_list[[i]]$average_watts,
+              'description'='')
     }) %>% bind_rows()  
 }
 
@@ -137,5 +138,12 @@ plot_summary_athlete <- function(activities_mapped,athlete_name){
                     mutate(p=value/sum(value))
     plot_summary_var(summary_dat,var='tot_time',title='Tímalengd æfinga') /
     plot_summary_var(summary_dat,var='tot_eff_distance',title='Umreiknuð vegalengd')
+}
+
+avg_power_to_dist <- function(avg_power,time){
+    F_a_coef <- 0.5*0.408*1.225 #aerodynamic drag
+    loss <- 0.03 #loss of power due to chain
+    v <- (avg_power*loss/F_a_coef)^(1/3)
+    return(v*time)
 }
 
