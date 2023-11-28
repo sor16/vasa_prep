@@ -54,14 +54,14 @@ con <- dbConnect(MariaDB(), dbname = database_name, host = mysql$host,
                   port = mysql$port, user = mysql$user,
                   password = mysql$password,ssl.ca='cert.pem')
 users <- arrange(load_data(con,'User'),name)
-# activities <- update_activities(con,users,date_origin=start_date) %>%
-#               mutate(type=ifelse(type %in% c('Hike','Golf'),'Walk',type),
-#                      type=ifelse(type %in% c('Ride','VirtualRide'),'Ride',type),
-#                      type=ifelse(type %in% c('NordicSki','RollerSki'),'NordicSki',type)) #hack to allow golf activities
-activities <- load_data(con,'Activity') %>%
+activities <- update_activities(con,users,date_origin=start_date) %>%
               mutate(type=ifelse(type %in% c('Hike','Golf'),'Walk',type),
                      type=ifelse(type %in% c('Ride','VirtualRide'),'Ride',type),
                      type=ifelse(type %in% c('NordicSki','RollerSki'),'NordicSki',type)) #hack to allow golf activities
+# activities <- load_data(con,'Activity') %>%
+#               mutate(type=ifelse(type %in% c('Hike','Golf'),'Walk',type),
+#                      type=ifelse(type %in% c('Ride','VirtualRide'),'Ride',type),
+#                      type=ifelse(type %in% c('NordicSki','RollerSki'),'NordicSki',type)) #hack to allow golf activities
 activity_types <- arrange(load_data(con,'ActivityType'),name)
 activity_prop <- arrange(load_data(con,'ActivityProp'),athlete_id,activity_type)
 ```
